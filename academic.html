@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academic — Muhammad Fahmi Al Kahfi</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .academic-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 2rem 2.5rem;
+      margin-bottom: 1.5rem;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .academic-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+
+    .academic-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .academic-icon {
+      width: 52px; height: 52px;
+      background: var(--teal-soft);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--teal);
+      margin-bottom: 1rem;
+    }
+    .academic-icon svg { width: 26px; height: 26px; }
+    .academic-institution { font-size: 1.25rem; font-weight: 700; color: var(--dark); margin-bottom: 0.25rem; }
+    .academic-role { color: var(--teal); font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .academic-meta { font-size: 0.85rem; color: var(--muted); }
+    .academic-period {
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .gpa-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--teal);
+      color: var(--white);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 0.75rem;
+    }
+    .academic-desc {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      color: var(--mid);
+      line-height: 1.8;
+    }
+    .paper-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 1rem;
+      color: var(--teal);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border: 1.5px solid var(--teal);
+      border-radius: 20px;
+      transition: all var(--transition);
+    }
+    .paper-link:hover { background: var(--teal); color: var(--white); }
+    .paper-link svg { width: 15px; height: 15px; }
+    .section-header { margin-bottom: 2rem; }
+  </style>
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-brand">Muhammad Fahmi Al Kahfi</a>
+    <button class="nav-toggle" aria-label="Toggle menu">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li class="nav-item">
+        <a href="academic.html" class="nav-link active">
+          Academic
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+        <div class="dropdown">
+          <a href="#education">Diponegoro University</a>
+          <a href="#research">Mechanical Fluid &amp; Thermal Research Lab</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="skill.html" class="nav-link">
+          My Skill
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+        <div class="dropdown">
+          <a href="skill.html#hard">Hard Skill</a>
+          <a href="skill.html#soft">Soft Skill</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="experience.html" class="nav-link">
+          Experiences
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+        <div class="dropdown">
+          <a href="experience.html#professional">Professional</a>
+          <a href="experience.html#organisational">Organisational</a>
+          <a href="experience.html#other">Other Experience</a>
+        </div>
+      </li>
+      <li><a href="project.html" class="nav-link">Project</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ========== PAGE HERO ========== -->
+<div class="section-alt" style="padding: 4rem 0 2rem;">
+  <div class="container">
+    <h1 class="page-hero-title" data-label="academic.pageTitle">Academic background</h1>
+    <p class="page-hero-sub" data-label="academic.pageSub">Building expertise through rigorous education and hands-on research experience</p>
+  </div>
+</div>
+
+<!-- ========== EDUCATION ========== -->
+<section class="section" id="education">
+  <div class="container">
+    <div class="animate section-header">
+      <div class="section-title" data-label="academic.educationTitle">Education</div>
+      <div class="divider"></div>
+    </div>
+
+    <div id="education-container"><div class="animate academic-card">
+      <div class="academic-icon">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+      </div>
+      <div class="academic-card-header">
+        <div>
+          <div class="academic-institution">Universitas Diponegoro</div>
+          <div class="academic-role">Bachelor of Mechanical Engineering</div>
+          <div class="academic-meta">Semarang, Central Java, Indonesia</div>
+          <div class="gpa-badge">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px;height:14px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+            GPA 3.64 / 4.00
+          </div>
+        </div>
+        <span class="academic-period">Aug 2022 – Aug 2026 (Expected)</span>
+      </div>
+      <div class="academic-desc">
+        Pursuing a degree in Mechanical Engineering with a strong focus on fluid dynamics, thermal systems, and computational analysis. Engaged in advanced coursework covering heat transfer, fluid mechanics, thermodynamics, and engineering design — building a solid theoretical and practical foundation for tackling complex industry challenges.
+        <br><br>
+        As a member of the Mechanical Fluid and Thermal Research Lab, I apply classroom knowledge directly in active research projects, developing computational skills with ANSYS Fluent for CFD and ESSS Rocky for DEM simulations.
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ========== RESEARCH / LAB EXPERIENCE ========== -->
+<section class="section-alt" id="research">
+  <div class="container">
+    <div class="animate section-header">
+      <div class="section-title" data-label="academic.researchTitle">Research &amp; Laboratory Experience</div>
+      <div class="divider"></div>
+    </div>
+
+    <div id="research-container"><div class="animate academic-card">
+      <div class="academic-icon">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+      </div>
+      <div class="academic-card-header">
+        <div>
+          <div class="academic-institution">Mechanical Fluid and Thermal Research Lab</div>
+          <div class="academic-role">Research Assistant</div>
+          <div class="academic-meta">Universitas Diponegoro · Semarang, Indonesia</div>
+        </div>
+        <span class="academic-period">2022 – Present</span>
+      </div>
+      <div style="margin-bottom: 0.75rem;">
+        <span style="font-size:0.82rem; color:var(--muted); font-weight:500; text-transform:uppercase; letter-spacing:0.05em;">Contribution</span>
+        <p style="margin-top:0.25rem; font-size:0.95rem; color:var(--dark); font-weight:500;">Researcher &amp; Computational Analyst</p>
+      </div>
+      <div class="academic-desc">
+        Conducting advanced research in fluid mechanics and thermal systems using industry-grade simulation tools. Working on cutting-edge projects involving computational fluid dynamics (CFD) with ANSYS Fluent and Discrete Element Method (DEM) simulations with ESSS Rocky.
+        <br><br>
+        Responsibilities include setting up simulation models, running parametric studies, validating computational results against experimental data, and contributing to research reports and documentation. This lab experience directly shapes my ability to apply theoretical engineering principles to complex, real-world problems.
+      </div>
+      <!-- Paper link (optional — uncomment when available)
+      <a href="#" target="_blank" class="paper-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        View Published Paper
+      </a>
+      -->
+    </div>
+  </div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2025 Muhammad Fahmi Al Kahfi · <a href="index.html">Back to Home</a></p>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+<script src="assets/loader.js" defer></script>
+</body>
+</html>

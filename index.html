@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhammad Fahmi Al Kahfi — Portfolio</title>
+  <meta name="description" content="Portfolio of Muhammad Fahmi Al Kahfi — Mechanical Engineer, Researcher, Problem Solver." />
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    /* ---- HERO ---- */
+    .hero {
+      min-height: calc(100vh - var(--nav-h));
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      width: 100%;
+    }
+    /* Photo side */
+    .hero-photo-wrap {
+      position: relative;
+      flex-shrink: 0;
+      width: 380px;
+    }
+    .hero-glow {
+      position: absolute;
+      inset: -30px;
+      border-radius: var(--radius-xl);
+      background: radial-gradient(ellipse at 70% 20%, var(--pink-soft) 0%, transparent 55%),
+                  radial-gradient(ellipse at 20% 80%, var(--teal-glow) 0%, transparent 55%);
+      filter: blur(18px);
+      z-index: 0;
+    }
+    .hero-photo-card {
+      position: relative;
+      z-index: 1;
+      background: var(--white);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      aspect-ratio: 3/4;
+      max-height: 480px;
+    }
+    .hero-photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+    /* Text side */
+    .hero-text { flex: 1; }
+    .hero-text h1 {
+      color: var(--teal);
+      margin-bottom: 1rem;
+    }
+    .hero-roles {
+      font-size: 1.1rem;
+      color: var(--mid);
+      margin-bottom: 2rem;
+    }
+    .hero-roles span { color: var(--teal); font-weight: 600; }
+
+    /* ---- ABOUT ---- */
+    .about-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .about-box p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+    }
+
+    /* ---- SUMMARY CARDS ---- */
+    .summary-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      transition: box-shadow var(--transition), transform var(--transition);
+      display: block;
+      color: inherit;
+    }
+    .summary-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+    .summary-card h4 { color: var(--dark); margin-bottom: 0.4rem; }
+    .summary-card p { font-size: 0.9rem; color: var(--muted); }
+
+    /* ---- SKILL CHIPS ---- */
+    .skill-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+    .chip {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      background: var(--teal);
+      color: var(--white);
+    }
+    .chip.soft {
+      background: transparent;
+      border: 1.5px solid var(--teal);
+      color: var(--teal-dark);
+    }
+
+    /* ---- TESTIMONIAL ---- */
+    .testimonial-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--teal);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      padding: 1.5rem 1.75rem;
+    }
+    .testimonial-quote { font-size: 1rem; font-style: italic; color: var(--mid); margin-bottom: 1rem; line-height: 1.8; }
+    .testimonial-author { font-weight: 600; color: var(--dark); font-size: 0.9rem; }
+    .testimonial-role { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+
+    /* ---- CONTACT ---- */
+    .contact-section { background: var(--dark); padding: 5rem 0; }
+    .contact-section .section-title { color: var(--teal); }
+    .contact-section p { color: var(--muted); }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0.8rem 1.5rem;
+      border-radius: 20px;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      color: var(--white);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all var(--transition);
+    }
+    .contact-link:hover { border-color: var(--teal); color: var(--teal); }
+    .contact-link svg { width: 18px; height: 18px; }
+
+    @media (max-width: 800px) {
+      .hero-inner { flex-direction: column; text-align: center; }
+      .hero-photo-wrap { width: 260px; }
+      .hero-text h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-brand">Muhammad Fahmi Al Kahfi</a>
+    <button class="nav-toggle" aria-label="Toggle menu">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link active">Home</a></li>
+      <li class="nav-item">
+        <a href="academic.html" class="nav-link">
+          Academic
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+        <div class="dropdown">
+          <a href="academic.html#education">Diponegoro University</a>
+          <a href="academic.html#research">Mechanical Fluid &amp; Thermal Research Lab</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="skill.html" class="nav-link">
+          My Skill
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+        <div class="dropdown">
+          <a href="skill.html#hard">Hard Skill</a>
+          <a href="skill.html#soft">Soft Skill</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="experience.html" class="nav-link">
+          Experiences
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+        <div class="dropdown">
+          <a href="experience.html#professional">Professional</a>
+          <a href="experience.html#organisational">Organisational</a>
+          <a href="experience.html#other">Other Experience</a>
+        </div>
+      </li>
+      <li><a href="project.html" class="nav-link">Project</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-inner">
+
+      <!-- Photo -->
+      <div class="hero-photo-wrap">
+        <div class="hero-glow"></div>
+        <div class="hero-photo-card">
+          <img src="Resource/Profile Picture.png" alt="Muhammad Fahmi Al Kahfi" />
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="hero-text">
+        <h1 id="hero-tagline">Welcome to<br>my portfolio</h1>
+        <p class="hero-roles" id="hero-roles">
+          <span>Mechanical Engineer</span> &nbsp;|&nbsp;
+          <span>Researcher</span> &nbsp;|&nbsp;
+          <span>Problem Solver</span>
+        </p>
+        <button class="btn-scroll" data-scroll="#about" aria-label="Scroll down">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== ABOUT ME ========== -->
+<section class="section-alt" id="about">
+  <div class="container">
+    <div class="animate">
+      <div class="section-title" data-label="index.aboutTitle">About Me</div>
+      <div class="divider"></div>
+      <div class="about-box">
+        <p id="about-text">
+          I am a final-year Mechanical Engineering student at Universitas Diponegoro, specializing in fluid mechanics, computational fluid dynamics (CFD), and energy conversion systems. With a GPA of 3.64/4.00 and hands-on research experience at the Mechanical Fluid and Thermal Research Lab, I bridge rigorous analytical thinking with real-world engineering execution.
+          <br><br>
+          Beyond technical mastery, I have led large-scale national events, managed cross-functional teams of 100+ members, and driven measurable outcomes through structured project management frameworks. As Executive Director of INCEPTION 2025 — the biggest petroleum event at Undip — I secured 90+ competing teams from across Indonesia and grew an audience of 154,000. I do not just solve problems — I architect solutions.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ACADEMIC BACKGROUND ========== -->
+<section class="section" id="academic-summary">
+  <div class="container">
+    <div class="animate">
+      <div class="section-title" data-label="index.academicTitle">Academic Background</div>
+      <div class="divider"></div>
+      <div class="grid-2">
+        <a href="academic.html#education" class="summary-card">
+          <div class="card-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+          </div>
+          <h4>Diponegoro University</h4>
+          <p>Mechanical Engineering degree with focus on fluid dynamics and thermal systems. GPA 3.64/4.00</p>
+        </a>
+        <a href="academic.html#research" class="summary-card">
+          <div class="card-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2"/></svg>
+          </div>
+          <h4>Mechanical Fluid &amp; Thermal Research Lab</h4>
+          <p>Advanced research in computational fluid dynamics and thermal analysis using ANSYS Fluent and ESSS Rocky</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SKILLS & EXPERTISE ========== -->
+<section class="section-alt" id="skills-summary">
+  <div class="container">
+    <div class="animate">
+      <div class="section-title" data-label="index.skillsTitle">Skills &amp; Expertise</div>
+      <div class="divider"></div>
+      <div class="grid-2">
+        <div>
+          <h4 style="margin-bottom:0.75rem; color:var(--dark);" data-label="index.skillsHardLabel">Hard Skills</h4>
+          <div class="skill-chips" id="skills-hard-chips">
+            <span class="chip">Computer Aided Design</span>
+            <span class="chip">Computational Fluid Dynamic</span>
+            <span class="chip">Discrete Element Method</span>
+            <span class="chip">Technomatic Plant Simulation</span>
+          </div>
+        </div>
+        <div>
+          <h4 style="margin-bottom:0.75rem; color:var(--dark);" data-label="index.skillsSoftLabel">Soft Skills</h4>
+          <div class="skill-chips" id="skills-soft-chips">
+            <span class="chip soft">Leadership</span>
+            <span class="chip soft">Project Planning</span>
+            <span class="chip soft">Team Work</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:2rem; text-align:center;">
+        <a href="skill.html" class="btn btn-outline">View All Skills →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== EXPERIENCE OVERVIEW ========== -->
+<section class="section" id="experience-summary">
+  <div class="container">
+    <div class="animate">
+      <div class="section-title" data-label="index.experienceTitle">Experience Overview</div>
+      <div class="divider"></div>
+      <div class="grid-2">
+        <a href="experience.html#professional" class="summary-card">
+          <div class="card-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2"/></svg>
+          </div>
+          <h4>Professional Experiences</h4>
+          <p>Industry experience in mechanical engineering and research projects at PT. Rekayasa Industri, Jakarta</p>
+        </a>
+        <a href="experience.html#organisational" class="summary-card">
+          <div class="card-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <h4>Organisational Experiences</h4>
+          <p>Leadership roles in SPE Undip, HMM Undip, and INCEPTION 2025 — managing national-scale events and teams</p>
+        </a>
+      </div>
+      <div style="margin-top:2rem; text-align:center;">
+        <a href="experience.html" class="btn btn-outline">View All Experiences →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURED PROJECTS ========== -->
+<section class="section-alt" id="projects-summary">
+  <div class="container">
+    <div class="animate">
+      <div class="section-title" data-label="index.projectsTitle">Featured Projects</div>
+      <div class="divider"></div>
+      <div class="grid-2" id="featured-projects-grid">
+        <div class="summary-card">
+          <div class="tag-row" style="margin-bottom:0.75rem;">
+            <span class="tag">Energy</span>
+            <span class="tag">Research</span>
+          </div>
+          <h4>Offshore Wind Farm Development Study</h4>
+          <p style="margin-top:0.4rem;">Assessing Rote Island's offshore wind energy potential in collaboration with PLN — supporting Indonesia's renewable energy goals.</p>
+          <div style="margin-top:1rem;">
+            <a href="project.html" class="link-teal">View Project
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="tag-row" style="margin-bottom:0.75rem;">
+            <span class="tag">Energy</span>
+            <span class="tag">Competition</span>
+          </div>
+          <h4>Geothermal Development — IPFest 2024</h4>
+          <p style="margin-top:0.4rem;">Led team to 2nd Runner Up in the national Geothermal Development Competition — delivering a full resource-to-plant engineering proposal.</p>
+          <div style="margin-top:1rem;">
+            <a href="project.html" class="link-teal">View Project
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:2rem; text-align:center;">
+        <a href="project.html" class="btn btn-primary">View All Projects →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHAT PEOPLE THINK ========== -->
+<section class="section" id="testimonials">
+  <div class="container">
+    <div class="animate">
+      <div class="section-title" data-label="index.testimonialsTitle">What People Think of Me</div>
+      <div class="divider"></div>
+      <div class="grid-2" id="testimonials-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-quote">"Add a testimonial from a colleague, supervisor, or lecturer who has worked with you. Real quotes significantly strengthen credibility with recruiters."</p>
+          <div class="testimonial-author">— Name Here</div>
+          <div class="testimonial-role">Title / Position</div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-quote">"Another testimonial from someone who has directly observed your technical skills, leadership, or work ethic in action."</p>
+          <div class="testimonial-author">— Name Here</div>
+          <div class="testimonial-role">Title / Position</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LET'S CONNECT ========== -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="animate">
+      <div class="section-title" data-label="index.connectTitle">Let's Connect</div>
+      <div class="divider"></div>
+      <p style="max-width:520px;">Whether you have a project in mind, a research collaboration, or just want to connect — I am always open to meaningful conversations.</p>
+      <div class="contact-links">
+        <a href="mailto:fahmialkahfi010404@gmail.com" class="contact-link" id="contact-email">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <span>fahmialkahfi010404@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/fahmialkahfi/" target="_blank" rel="noopener" class="contact-link" id="contact-linkedin">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="tel:+6281311626247" class="contact-link" id="contact-phone">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          <span>+62-813-1162-6247</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="container">
+    <p>© 2025 Muhammad Fahmi Al Kahfi · Mechanical Engineer · Semarang, Indonesia</p>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+<script src="assets/loader.js" defer></script>
+</body>
+</html>

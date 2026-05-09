@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Muhammad Fahmi Al Kahfi</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    /* ---- Filter Bar ---- */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 3rem;
+    }
+
+    /* ---- Timeline project layout ---- */
+    .projects-timeline { position: relative; padding-left: 36px; }
+    .projects-timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px; top: 12px; bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .project-item { position: relative; margin-bottom: 2.5rem; }
+    .project-item .timeline-dot {
+      position: absolute;
+      left: -30px; top: 18px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--teal);
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 2px var(--teal);
+      z-index: 1;
+    }
+    .project-year-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ---- Project Card ---- */
+    .project-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .project-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+
+    .project-thumb {
+      height: 180px;
+      background: linear-gradient(135deg, #0f2744 0%, #0D9488 50%, #14B8A6 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .project-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+    }
+    .project-thumb-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.5rem;
+    }
+    .project-thumb-placeholder svg { width: 40px; height: 40px; opacity: 0.5; color: white; }
+    .project-thumb-placeholder span { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+
+    .project-expand-hint {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .project-body { padding: 1.5rem; }
+    .project-title { font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: 0.4rem; }
+    .project-headline { font-size: 0.875rem; color: var(--mid); margin-bottom: 1rem; line-height: 1.6; }
+
+    /* ---- Modal ---- */
+    .modal-thumb {
+      height: 220px;
+      background: linear-gradient(135deg, #0f2744 0%, #0D9488 50%, #14B8A6 100%);
+      border-radius: var(--radius-md);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    .modal-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .modal-year-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+    .modal-title { font-size: 1.4rem; font-weight: 800; color: var(--dark); margin-bottom: 0.5rem; }
+    .modal-headline { font-size: 0.95rem; color: var(--teal-dark); font-weight: 500; margin-bottom: 1.25rem; }
+    .modal-desc { color: var(--mid); line-height: 1.85; margin-bottom: 1.5rem; }
+    .modal-ext-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--teal); color: var(--white);
+      padding: 8px 18px; border-radius: 20px;
+      font-size: 0.875rem; font-weight: 500;
+      transition: background var(--transition);
+      margin-top: 0.5rem;
+    }
+    .modal-ext-link:hover { background: var(--teal-dark); }
+    .modal-ext-link svg { width: 15px; height: 15px; }
+  </style>
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-brand">Muhammad Fahmi Al Kahfi</a>
+    <button class="nav-toggle" aria-label="Toggle menu">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li class="nav-item">
+        <a href="academic.html" class="nav-link">
+          Academic
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+        <div class="dropdown">
+          <a href="academic.html#education">Diponegoro University</a>
+          <a href="academic.html#research">Mechanical Fluid &amp; Thermal Research Lab</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="skill.html" class="nav-link">
+          My Skill
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+        <div class="dropdown">
+          <a href="skill.html#hard">Hard Skill</a>
+          <a href="skill.html#soft">Soft Skill</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="experience.html" class="nav-link">
+          Experiences
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+        <div class="dropdown">
+          <a href="experience.html#professional">Professional</a>
+          <a href="experience.html#organisational">Organisational</a>
+          <a href="experience.html#other">Other Experience</a>
+        </div>
+      </li>
+      <li><a href="project.html" class="nav-link active">Project</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ========== PAGE HERO ========== -->
+<div class="section-alt" style="padding: 4rem 0 2rem;">
+  <div class="container">
+    <h1 class="page-hero-title" data-label="project.pageTitle">Projects</h1>
+    <p class="page-hero-sub" data-label="project.pageSub">Showcasing engineering solutions and research contributions</p>
+  </div>
+</div>
+
+<!-- ========== PROJECTS ========== -->
+<section class="section">
+  <div class="container">
+
+    <!-- Filter Tags -->
+    <div class="animate">
+      <p style="font-size:0.85rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.75rem;">Filter by tag</p>
+      <div class="filter-bar" id="filter-bar">
+        <span class="tag filter-tag active" data-tag="All">All</span>
+        <span class="tag filter-tag" data-tag="Energy">Energy</span>
+        <span class="tag filter-tag" data-tag="Research">Research</span>
+        <span class="tag filter-tag" data-tag="CFD">CFD</span>
+        <span class="tag filter-tag" data-tag="CAD">CAD</span>
+        <span class="tag filter-tag" data-tag="Thermal">Thermal</span>
+        <span class="tag filter-tag" data-tag="Competition">Competition</span>
+        <span class="tag filter-tag" data-tag="Professional">Professional</span>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="projects-timeline animate" id="projects-timeline-container">
+
+      <!-- 2025 -->
+      <div class="project-item" data-tags="CAD,Thermal,Professional">
+        <div class="timeline-dot"></div>
+        <div class="project-year-label">2025</div>
+        <div class="project-card" onclick="openProjectModal('heat-exchanger')">
+          <div class="project-thumb">
+            <div class="project-thumb-placeholder">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+              <span>Click to view details</span>
+            </div>
+            <span class="project-expand-hint">↗ View Details</span>
+          </div>
+          <div class="project-body">
+            <div class="tag-row" style="margin-bottom:0.75rem;">
+              <span class="tag">CAD</span>
+              <span class="tag">Thermal</span>
+              <span class="tag">Professional</span>
+            </div>
+            <div class="project-title">Shell and Tube Heat Exchanger Design</div>
+            <div class="project-headline">Industrial heat exchanger design and optimization at PT. Rekayasa Industri — meeting TEMA &amp; ASME international standards</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2024 Group -->
+      <div class="project-item" data-tags="Energy,Research,CFD">
+        <div class="timeline-dot"></div>
+        <div class="project-year-label">2024</div>
+        <div class="project-card" onclick="openProjectModal('wind-farm')">
+          <div class="project-thumb">
+            <div class="project-thumb-placeholder">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <span>Click to view details</span>
+            </div>
+            <span class="project-expand-hint">↗ View Details</span>
+          </div>
+          <div class="project-body">
+            <div class="tag-row" style="margin-bottom:0.75rem;">
+              <span class="tag">Energy</span>
+              <span class="tag">Research</span>
+              <span class="tag">CFD</span>
+            </div>
+            <div class="project-title">Offshore Wind Farm Development Potential Study</div>
+            <div class="project-headline">Assessing Rote Island's offshore wind energy potential — a collaborative study with PLN supporting Indonesia's renewable energy transition</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item" data-tags="Energy,Competition">
+        <div class="timeline-dot"></div>
+        <div class="project-card" onclick="openProjectModal('geothermal-ipfest')">
+          <div class="project-thumb">
+            <div class="project-thumb-placeholder">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
+              <span>Click to view details</span>
+            </div>
+            <span class="project-expand-hint">↗ View Details</span>
+          </div>
+          <div class="project-body">
+            <div class="tag-row" style="margin-bottom:0.75rem;">
+              <span class="tag">Energy</span>
+              <span class="tag">Competition</span>
+            </div>
+            <div class="project-title">Geothermal Development Case Study — IPFest 2024</div>
+            <div class="project-headline">2nd Runner Up in the national Geothermal Development Competition — delivering a full resource-to-plant engineering and economic feasibility proposal</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item" data-tags="Energy,Competition">
+        <div class="timeline-dot"></div>
+        <div class="project-card" onclick="openProjectModal('geothermal-derrick')">
+          <div class="project-thumb">
+            <div class="project-thumb-placeholder">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Click to view details</span>
+            </div>
+            <span class="project-expand-hint">↗ View Details</span>
+          </div>
+          <div class="project-body">
+            <div class="tag-row" style="margin-bottom:0.75rem;">
+              <span class="tag">Energy</span>
+              <span class="tag">Competition</span>
+            </div>
+            <div class="project-title">Geothermal Case Competition — Derrick 2024</div>
+            <div class="project-headline">Finalist in the national Derrick 2024 Geothermal Case Competition — integrating technical, economic, and environmental analysis into a comprehensive exploitation strategy</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== PROJECT MODAL ========== -->
+<div class="modal-overlay" id="project-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeProjectModal()" aria-label="Close">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <div class="modal-thumb" id="modal-thumb">
+      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+        <svg style="width:48px;height:48px;opacity:0.4;color:white;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+      </div>
+    </div>
+    <span class="modal-year-badge" id="modal-year">2024</span>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <p class="modal-headline" id="modal-headline"></p>
+    <div class="tag-row" id="modal-tags" style="margin-bottom:1.25rem;"></div>
+    <p class="modal-desc" id="modal-desc"></p>
+    <a href="#" target="_blank" rel="noopener" class="modal-ext-link" id="modal-link">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+      View External Link
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>© 2025 Muhammad Fahmi Al Kahfi · <a href="index.html">Back to Home</a></p>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+<script src="assets/loader.js" defer></script>
+<script>
+  const projects = [
+    {
+      id: 'heat-exchanger',
+      title: 'Shell and Tube Heat Exchanger Design',
+      headline: 'Industrial heat exchanger design and optimization at PT. Rekayasa Industri',
+      year: '2025',
+      description: 'Designed and optimized shell and tube heat exchangers during internship at PT. Rekayasa Industri. Utilized AutoCAD for detailed component drafting and HTRI software for thermal-hydraulic design and optimization. All designs were rigorously validated against TEMA (Tubular Exchanger Manufacturers Association) and ASME (American Society of Mechanical Engineers) international standards — ensuring both performance and compliance with client requirements.',
+      tags: ['CAD', 'Thermal', 'Professional'],
+      externalLink: null
+    },
+    {
+      id: 'wind-farm',
+      title: 'Offshore Wind Farm Development Potential Study',
+      headline: 'Assessing Rote Island\'s offshore wind energy potential in collaboration with PLN',
+      year: '2024',
+      description: 'A collaborative research study with PLN (Indonesia\'s state electricity company) evaluating the offshore wind farm development potential at Rote Island, Indonesia. The study analyzed wind resource data, site conditions, bathymetry, and projected energy output to support Indonesia\'s ambitious renewable energy transition goals — contributing to the national effort to increase the share of renewables in the energy mix.',
+      tags: ['Energy', 'Research', 'CFD'],
+      externalLink: null
+    },
+    {
+      id: 'geothermal-ipfest',
+      title: 'Geothermal Development Case Study — IPFest 2024',
+      headline: '2nd Runner Up in the national Geothermal Development Competition',
+      year: '2024',
+      description: 'Developed a comprehensive geothermal energy development proposal as team leader for IPFest 2024. The study covered full-cycle resource assessment, well design, surface facility layout, and economic feasibility analysis. Achieved 2nd Runner Up position among engineering teams from universities across Indonesia — demonstrating both technical depth in renewable energy and strategic engineering problem-solving.',
+      tags: ['Energy', 'Competition'],
+      externalLink: null
+    },
+    {
+      id: 'geothermal-derrick',
+      title: 'Geothermal Case Competition — Derrick 2024',
+      headline: 'Finalist in national geothermal engineering case competition',
+      year: '2024',
+      description: 'Reached the Finalist stage in the Derrick 2024 Geothermal Case Competition. Led the team in developing a detailed geothermal energy exploitation strategy, integrating technical engineering analysis with comprehensive environmental impact assessment and economic considerations — showcasing the ability to tackle complex multidisciplinary engineering challenges at a national competitive level.',
+      tags: ['Energy', 'Competition'],
+      externalLink: null
+    }
+  ];
+
+  window.portfolioProjects = projects;
+
+  function openProjectModal(id) {
+    const project = (window.portfolioProjects || projects).find(p => p.id === id);
+    if (!project) return;
+    document.getElementById('modal-title').textContent = project.title;
+    document.getElementById('modal-headline').textContent = project.headline;
+    document.getElementById('modal-year').textContent = project.year;
+    document.getElementById('modal-desc').textContent = project.description;
+    document.getElementById('modal-tags').innerHTML = project.tags.map(t => `<span class="tag">${t}</span>`).join('');
+    const linkEl = document.getElementById('modal-link');
+    if (project.externalLink) { linkEl.href = project.externalLink; linkEl.style.display = 'inline-flex'; }
+    else { linkEl.style.display = 'none'; }
+    document.getElementById('project-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProjectModal() {
+    document.getElementById('project-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('project-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeProjectModal();
+  });
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProjectModal(); });
+
+  /* Tag filter */
+  document.querySelectorAll('.filter-tag').forEach(tag => {
+    tag.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+      tag.classList.add('active');
+      const selected = tag.dataset.tag;
+      document.querySelectorAll('.project-item').forEach(item => {
+        item.style.display = (selected === 'All' || item.dataset.tags.includes(selected)) ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
