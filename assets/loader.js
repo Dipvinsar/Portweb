@@ -492,4 +492,8 @@
       /* Re-trigger scroll animations for newly rendered elements */
       setTimeout(reObserve, 50);
     })
-    .catch(function
+    .catch(function (err) {
+      console.warn('[loader.js] Could not load portfolio data:', err);
+    });
+
+})();
