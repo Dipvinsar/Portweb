@@ -3,7 +3,7 @@
 //  PORTFOLIO DASHBOARD v2 — Muhammad Fahmi Al Kahfi
 //  GANTI PASSWORD sebelum upload ke hosting!
 // ============================================================
-define('DASHBOARD_PASSWORD', 'Boom#boom1');
+define('DASHBOARD_PASSWORD', 'fahmi2025');
 define('DATA_FILE',   __DIR__ . '/../data/portfolio.json');
 define('UPLOAD_DIR',  __DIR__ . '/../uploads/');
 define('SESSION_KEY', 'pf_admin_logged_in');
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $new = trim($_POST['new_password']??'');
         if (strlen($new)<6) { echo json_encode(['ok'=>false,'msg'=>'Minimal 6 karakter']); exit; }
         $content = preg_replace("/define\('DASHBOARD_PASSWORD',\s*'[^']*'\)/",
-            "define('DASHBOARD_PASSWORD', 'Boom#boom1')", file_get_contents(__FILE__));
+            "define('DASHBOARD_PASSWORD', '".addslashes($new)."')", file_get_contents(__FILE__));
         echo file_put_contents(__FILE__,$content)!==false
             ? json_encode(['ok'=>true]) : json_encode(['ok'=>false,'msg'=>'Tidak bisa update password.']);
         exit;
@@ -1238,17 +1238,31 @@ function collectData(){
   });
 
   // Projects
-  D.projects=[...document.querySelectorAll('#projects-list .array-item')].map((el,i)=>({
-    id:           D.projects[i]?.id||'proj-'+i,
-    title:        el.querySelector('.f-title')?.value?.trim()||'',
-    headline:     el.querySelector('.f-headline')?.value?.trim()||'',
-    year:         el.querySelector('.f-year')?.value?.trim()||'',
-    description:  el.querySelector('.f-description')?.value?.trim()||'',
-    tags:         getTags('proj-'+i),
-    thumbnail:    el.querySelector('.f-thumbnail')?.value?.trim()||null,
-    externalLink: el.querySelector('.f-externalLink')?.value?.trim()||null,
-    featured:     el.querySelector('.f-featured') ? el.querySelector('.f-featured').checked : true
-  }));
+  D.projects=[...document.querySelectorAll('#projects-list .array-item')].map((el,i)=>{
+    var title = el.querySelector('.f-title')?.value?.trim()||'';
+    var existingId = D.projects[i]?.id;
+    // If ID is missing or a generic placeholder ('new'), generate a slug from the title.
+    // This prevents multiple new projects from sharing the same id='new' which breaks the modal.
+    var id;
+    if (existingId && existingId !== 'new') {
+      id = existingId;
+    } else if (title) {
+      id = title.toLowerCase().replace(/[^a-z0-9\s]/g,'').trim().replace(/\s+/g,'-').substring(0,50) || ('proj-'+i);
+    } else {
+      id = 'proj-'+i;
+    }
+    return {
+      id,
+      title,
+      headline:     el.querySelector('.f-headline')?.value?.trim()||'',
+      year:         el.querySelector('.f-year')?.value?.trim()||'',
+      description:  el.querySelector('.f-description')?.value?.trim()||'',
+      tags:         getTags('proj-'+i),
+      thumbnail:    el.querySelector('.f-thumbnail')?.value?.trim()||null,
+      externalLink: el.querySelector('.f-externalLink')?.value?.trim()||null,
+      featured:     el.querySelector('.f-featured') ? el.querySelector('.f-featured').checked : true
+    };
+  });
 
   // Testimonials
   D.testimonials=[...document.querySelectorAll('#testimonials-list .array-item')].map((el,i)=>({
