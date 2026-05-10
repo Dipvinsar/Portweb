@@ -8,7 +8,7 @@
     "phone": "+62-813-1162-6247",
     "linkedin": "https://www.linkedin.com/in/fahmialkahfi/",
     "location": "Semarang, Central Java, Indonesia",
-    "photo": "../Resource/Profile Picture.png"
+    "photo": "Resource/Profile Picture.png"
   },
 
   "academic": {
@@ -326,3 +326,4 @@
     }
   }
 }
+   

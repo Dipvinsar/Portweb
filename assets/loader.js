@@ -123,17 +123,17 @@
     var p = data.personal;
     var L = data.labels || {};
 
-    /* Hero tagline */
+    /* Hero tagline — prefer personal.tagline (set by dashboard) */
     var heroH1 = $id('hero-tagline');
     if (heroH1) {
-      var tagline = (L.hero && L.hero.tagline) ? L.hero.tagline : (p.tagline || '');
-      heroH1.innerHTML = tagline.replace(/\n/g, '<br>');
+      var tagline = p.tagline || (L.hero && L.hero.tagline) || '';
+      if (tagline) heroH1.innerHTML = tagline.replace(/\n/g, '<br>');
     }
 
-    /* Hero roles */
+    /* Hero roles — prefer personal.title (set by dashboard) */
     var rolesEl = $id('hero-roles');
     if (rolesEl) {
-      var rolesStr = (L.hero && L.hero.roles) ? L.hero.roles : p.title;
+      var rolesStr = p.title || (L.hero && L.hero.roles) || '';
       if (rolesStr) {
         var parts = rolesStr.split('|').map(function (s) { return s.trim(); });
         rolesEl.innerHTML = parts.map(function (r, i) {
@@ -475,7 +475,7 @@
   /* =========================================================
      MAIN — fetch JSON and render
   ========================================================= */
-  fetch('data/portfolio.json')
+  fetch('data/portfolio.json?v=' + Date.now())
     .then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
@@ -492,8 +492,4 @@
       /* Re-trigger scroll animations for newly rendered elements */
       setTimeout(reObserve, 50);
     })
-    .catch(function (err) {
-      console.warn('[loader.js] Could not load portfolio data:', err);
-    });
-
-})();
+    .catch(function
