@@ -4,10 +4,12 @@ deployment:
     - export DEPLOYPATH=/home/fahs5592/public_html/
     - /bin/cp -R assets $DEPLOYPATH
     - /bin/cp -R dashboard $DEPLOYPATH
-    - /bin/cp -R data $DEPLOYPATH
     - /bin/cp -R Resource $DEPLOYPATH 2>/dev/null || true
     - /bin/cp academic.html $DEPLOYPATH
     - /bin/cp experience.html $DEPLOYPATH
     - /bin/cp index.html $DEPLOYPATH
     - /bin/cp project.html $DEPLOYPATH
     - /bin/cp skill.html $DEPLOYPATH
+    # NOTE: data/ dan uploads/ SENGAJA tidak di-deploy.
+    # portfolio.json dan file upload hanya ada di server Hostinger
+    # dan dikelola via dashboard. Jangan pernah tambahkan data/ di sini.
