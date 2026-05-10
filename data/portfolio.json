@@ -1,6 +1,6 @@
 {
     "personal": {
-        "name": "Muhammad Fahmi Al",
+        "name": "Muhammad Fahmi Al Kahfi",
         "title": "Mechanical Engineer | Researcher | Problem Solver | Leader",
         "tagline": "GET TO KNOW ME",
         "about": "I am a final-year Mechanical Engineering student at Universitas Diponegoro, specializing in fluid mechanics, computational fluid dynamics (CFD), and energy conversion systems. With a GPA of 3.64/4.00 and hands-on research experience at the Mechanical Fluid and Thermal Research Lab, I bridge rigorous analytical thinking with real-world engineering execution.\n\nBeyond technical mastery, I have led large-scale national events, managed cross-functional teams of 100+ members, and driven measurable outcomes through structured project management frameworks. As Executive Director of INCEPTION 2025 — the biggest petroleum event at Undip — I secured 90+ competing teams from across Indonesia and grew an audience of 154,000. I do not just solve problems — I architect solutions.",
@@ -8,7 +8,7 @@
         "phone": "+62-813-1162-6247",
         "linkedin": "https://www.linkedin.com/in/fahmialkahfi/",
         "location": "Semarang, Central Java, Indonesia",
-        "photo": "uploads/image_1778416352_8bf740.png",
+        "photo": "uploads/image_1778422455_bde553.png",
         "cvLink": "uploads/pdf_1778363529_7f0bc8.pdf"
     },
     "academic": {
@@ -221,14 +221,14 @@
             "title": "Offshore Wind Farm Development Potential Study",
             "headline": "Assessing Rote Island's offshore wind energy potential in collaboration with PLN",
             "year": "2024",
-            "description": "A collaborative research study with PLN (Indonesia's state electricity company) evaluating the offshore wind farm development potential at Rote Island, Indonesia. The study analyzed wind resource data, site conditions, bathymetry, and projected energy output to support Indonesia's ambitious renewable energy transition goals — contributing to the national effort to increase the share of renewables in the energy mix.\n\nA collaborative research study with PLN (Indonesia's state electricity company) evaluating the offshore wind farm development potential at Rote Island, Indonesia. The study analyzed wind resource data, site conditions, bathymetry, and projected energy output to support Indonesia's ambitious renewable energy transition goals — contributing to the national effort to increase the share of renewables in the energy mix.\n\nA collaborative research study with PLN (Indonesia's state electricity company) evaluating the offshore wind farm development potential at Rote Island, Indonesia. The study analyzed wind resource data, site conditions, bathymetry, and projected energy output to support Indonesia's ambitious renewable energy transition goals — contributing to the national effort to increase the share of renewables in the energy mix.\n\nA collaborative research study with PLN (Indonesia's state electricity company) evaluating the offshore wind farm development potential at Rote Island, Indonesia. The study analyzed wind resource data, site conditions, bathymetry, and projected energy output to support Indonesia's ambitious renewable energy transition goals — contributing to the national effort to increase the share of renewables in the energy mix.",
+            "description": "Spearheaded the spatial and technical feasibility study for a 75 MW offshore wind farm in Rote Island, successfully balancing high renewable energy potential against extreme environmental challenges such as severe seismic risks and deep-sea bathymetry. Employing a data-driven, problem-solving approach, I conducted comprehensive wind prospecting, evaluated floating foundation solutions for depths up to 131 meters, and formulated earthquake-resistant structural mitigations. Ultimately, this analysis produced a strategic recommendation framework that validated the project's technical viability, ensured long-term operational safety, and optimally aligned with local transmission grid capacities.",
             "tags": [
                 "Energy",
                 "Research",
-                "CFD"
+                "Collaborative Study With PLN"
             ],
-            "thumbnail": null,
-            "externalLink": "https://www.linkedin.com/in/fahmialkahfi/",
+            "thumbnail": "uploads/image_1778422773_b4313d.jpeg",
+            "externalLink": null,
             "featured": true
         },
         {
@@ -236,13 +236,14 @@
             "title": "Geothermal Development Case Study — IPFest 2024",
             "headline": "2nd Runner Up national geothermal engineering competition",
             "year": "2024",
-            "description": "Developed a comprehensive geothermal energy development proposal as team leader for IPFest 2024. The study covered full-cycle resource assessment, well design, surface facility layout, and economic feasibility analysis. Achieved 2nd Runner Up position among engineering teams from universities across Indonesia — demonstrating both technical depth in renewable energy and strategic engineering problem-solving.",
+            "description": "Served as the Team Leader (CEO) of the GEOMECH team for the Muara Laboh geothermal field development project. I spearheaded the integration of diverse, specialized expertise from team members into a single, cohesive 80 MW development strategy. Acting as the central bridge, I unified geoscience (3G) data analysis, the selection of a dual-flash technology system, and financial modeling into a robust US$ 223.8 million investment proposal. By actively synthesizing the varied perspectives and technical insights of my team into an integrated vision, I successfully ensured the project was not only technically feasible but also economically competitive, achieving an estimated internal rate of return (IRR) of 13%.",
             "tags": [
                 "Energy",
                 "Competition",
-                "Research"
+                "Development Plan",
+                "Leadership"
             ],
-            "thumbnail": null,
+            "thumbnail": "uploads/image_1778422850_a3882e.jpeg",
             "externalLink": null,
             "featured": true
         },
@@ -254,25 +255,74 @@
             "description": "Reached the Finalist stage in the Derrick 2024 Geothermal Case Competition. Led the team in developing a detailed geothermal energy exploitation strategy, integrating technical engineering analysis with comprehensive environmental impact assessment and economic considerations.",
             "tags": [
                 "Energy",
-                "Competition"
+                "Competition",
+                "Development Plan"
             ],
             "thumbnail": null,
+            "externalLink": null,
+            "featured": false
+        },
+        {
+            "id": "heat-exchanger",
+            "title": "Structural Integrity & Code Compliance Analysis: Shell & Tube Heat Exchanger",
+            "headline": "Industrial heat exchanger design and optimization at PT. Rekayasa Industri",
+            "year": "2025",
+            "description": "Conducted a rigorous structural integrity and code compliance analysis for a Shell and Tube Heat Exchanger (STHX) at an Effluent Water Treatment Plant during an EPC engineering internship at PT Rekayasa Industri. I calculated the minimum required shell thickness (9.81 mm) based on ASME Section VIII and TEMA standards to mitigate risks of structural failure, overpressure, and sulfide corrosion. By comparing the theoretical minimum with the actual 19 mm design, I validated the equipment's operational safety while proposing strategic material cost optimizations and identifying critical documentation errors in the mechanical data sheet.",
+            "tags": [
+                "CAD",
+                "Professional",
+                "Development Plan"
+            ],
+            "thumbnail": "uploads/image_1778422904_8c304e.jpeg",
             "externalLink": null,
             "featured": true
         },
         {
-            "id": "heat-exchanger",
-            "title": "Shell and Tube Heat Exchanger Design",
-            "headline": "Industrial heat exchanger design and optimization at PT. Rekayasa Industri",
+            "id": "proj-4",
+            "title": "Thermal Design & CFD-DEM Analysis: Horizontal Drum Dryer for Biomass Pellets",
+            "headline": "Collaborative Study with PUSLITBANG PLN",
             "year": "2025",
-            "description": "Designed and optimized shell and tube heat exchangers during internship at PT. Rekayasa Industri. Utilized AutoCAD for detailed component drafting and HTRI software for thermal-hydraulic design and optimization. All designs were rigorously validated against TEMA (Tubular Exchanger Manufacturers Association) and ASME (American Society of Mechanical Engineers) international standards — ensuring both performance and compliance with client requirements.",
+            "description": "Developed the thermodynamic analytical framework and assisted in the CFD-DEM (Computational Fluid Dynamics - Discrete Element Method) simulation for a horizontal drum dryer designed to process Gamal wood biomass pellets. I conducted rigorous energy balance calculations to ensure drying efficiency and assisted in modeling the complex heat-mass transfer between air and solid particles. By interpreting multi-physics simulation data, I provided critical insights to optimize residence time and heat distribution, ensuring the technical viability of high-quality biomass production for sustainable energy systems.",
             "tags": [
-                "CAD",
-                "Thermal",
-                "Professional"
+                "Research",
+                "Energy",
+                "CFD",
+                "DEM",
+                "Collaborative Study With PLN"
             ],
-            "thumbnail": null,
+            "thumbnail": "uploads/image_1778423050_e47791.png",
             "externalLink": null,
+            "featured": true
+        },
+        {
+            "id": "advanced-multiphase-flow-analysis",
+            "title": "Advanced Multiphase Flow Analysis",
+            "headline": "Coupled CFD-DEM Simulation of Cyclone Separator",
+            "year": "2026",
+            "description": "Implemented an Eulerian-Lagrangian framework via advanced coupled CFD-DEM simulations to analyze gas-solid multiphase flow dynamics within a cyclone separator. This methodology provides a massive analytical advantage over the conventional Discrete Phase Model (DPM); whereas DPM is restricted to dilute flows by treating particles as mere volume-less point-masses, CFD-DEM explicitly resolves contact mechanics for both particle-particle and particle-wall interactions. The ability of CFD-DEM to account for actual particle shapes, volume fractions, and precise collision forces enables a highly accurate two-way momentum coupling in strongly swirling turbulent zones, yielding exceptionally realistic predictions for both collection efficiency and pressure drop distribution.",
+            "tags": [
+                "CFD",
+                "DEM",
+                "Research",
+                "CAD"
+            ],
+            "thumbnail": "uploads/image_1778423126_30955b.png",
+            "externalLink": null,
+            "featured": true
+        },
+        {
+            "id": "operational-excellence-event-strategy-odm-ft-2024",
+            "title": "Operational Excellence & Event Strategy: ODM FT 2024",
+            "headline": "Orchestrating flawless logistics and creative direction for a 2,000-participant.",
+            "year": "2024",
+            "description": "As the Head of the Event Division for ODM FT 2024, I directed the end-to-end planning and execution of a large-scale orientation event, seamlessly bridging creative vision with complex operational logistics. My primary challenge involved producing a highly engaging theatrical musical drama while simultaneously engineering a strict crowd-control protocol to mobilize 2,000 attendees for a synchronized break (ishoma) within a critical 45-minute window. By implementing a structured project management approach and meticulous zonal distribution, I successfully mitigated bottlenecks and maintained a flawless schedule, resulting in an exceptional event that secured maximum satisfaction from both participating students and the Faculty of Engineering stakeholders.",
+            "tags": [
+                "Event Management",
+                "Leadership",
+                "Project Planning"
+            ],
+            "thumbnail": "uploads/image_1778425841_ecff85.jpeg",
+            "externalLink": "https://www.youtube.com/watch?v=WYMbCJLvoWo&t",
             "featured": true
         }
     ],
@@ -328,7 +378,7 @@
             "hardTitle": "Hard skill",
             "hardSub": "Technical competencies in engineering software and computational methods",
             "softTitle": "Soft skill",
-            "softSub": "yakin kah kang",
+            "softSub": "Non-technical skill that i gain from my experiences",
             "proficiencyLabel": "Proficiency",
             "viewCertText": "View Certificate"
         },

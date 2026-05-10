@@ -219,6 +219,10 @@
           <span>Researcher</span> &nbsp;|&nbsp;
           <span>Problem Solver</span>
         </p>
+        <a id="hero-cv-btn" href="#" download class="hero-cv-btn" style="display:none;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Download CV
+        </a>
         <button class="btn-scroll" data-scroll="#about" aria-label="Scroll down">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
@@ -328,16 +332,30 @@
     <div class="animate">
       <div class="section-title" data-label="index.testimonialsTitle">What People Think of Me</div>
       <div class="divider"></div>
-      <div class="grid-2" id="testimonials-grid">
-        <div class="testimonial-card">
-          <p class="testimonial-quote">"Add a testimonial from a colleague, supervisor, or lecturer who has worked with you. Real quotes significantly strengthen credibility with recruiters."</p>
-          <div class="testimonial-author">— Name Here</div>
-          <div class="testimonial-role">Title / Position</div>
+      <div class="testi-slider-wrap">
+        <div class="testi-slider">
+          <div class="testi-track" id="testi-track">
+            <!-- Populated by loader.js -->
+            <div class="testi-slide">
+              <div class="testi-card">
+                <div class="testi-avatar">F</div>
+                <div class="testi-body">
+                  <p class="testi-quote">Add testimonials from colleagues, supervisors, or lecturers who have worked with you. Real quotes significantly strengthen credibility with recruiters.</p>
+                  <div class="testi-name">Name Here</div>
+                  <div class="testi-role">Title / Position</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="testimonial-card">
-          <p class="testimonial-quote">"Another testimonial from someone who has directly observed your technical skills, leadership, or work ethic in action."</p>
-          <div class="testimonial-author">— Name Here</div>
-          <div class="testimonial-role">Title / Position</div>
+        <div class="testi-controls" id="testi-controls">
+          <button class="testi-btn" id="testi-prev" aria-label="Previous testimonial">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <div class="testi-dots" id="testi-dots"></div>
+          <button class="testi-btn" id="testi-next" aria-label="Next testimonial">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
         </div>
       </div>
     </div>

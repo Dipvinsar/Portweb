@@ -302,10 +302,15 @@
     <button class="modal-close" onclick="closeProjectModal()" aria-label="Close">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
     </button>
-    <div class="modal-thumb" id="modal-thumb">
-      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-        <svg style="width:48px;height:48px;opacity:0.4;color:white;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-      </div>
+    <div class="modal-swiper" id="modal-swiper">
+      <div class="modal-swiper-track" id="modal-swiper-track"></div>
+      <button class="modal-swiper-btn modal-swiper-prev" id="modal-swiper-prev" style="display:none;" aria-label="Previous image">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button class="modal-swiper-btn modal-swiper-next" id="modal-swiper-next" style="display:none;" aria-label="Next image">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <div class="modal-swiper-counter" id="modal-swiper-counter" style="display:none;"></div>
     </div>
     <span class="modal-year-badge" id="modal-year">2024</span>
     <h2 class="modal-title" id="modal-title"></h2>
@@ -369,17 +374,54 @@
 
   window.portfolioProjects = projects;
 
+  /* ── Image Swiper state ── */
+  var _swiperIdx = 0;
+  var _swiperTotal = 0;
+
+  function _swiperGo(idx) {
+    var track = document.getElementById('modal-swiper-track');
+    var counter = document.getElementById('modal-swiper-counter');
+    if (!track) return;
+    _swiperIdx = Math.max(0, Math.min(idx, _swiperTotal - 1));
+    track.style.transform = 'translateX(-' + (_swiperIdx * 100) + '%)';
+    if (counter) counter.textContent = (_swiperIdx + 1) + ' / ' + _swiperTotal;
+  }
+
   function openProjectModal(id) {
     const project = (window.portfolioProjects || projects).find(p => p.id === id);
     if (!project) return;
 
-    /* Bug 3 fix — thumbnail di modal */
-    const thumbEl = document.getElementById('modal-thumb');
-    if (thumbEl) {
-      if (project.thumbnail) {
-        thumbEl.innerHTML = '<img src="' + project.thumbnail + '" alt="' + project.title + '" style="width:100%;height:100%;object-fit:cover;">';
+    /* Build image list: prefer images[], fallback to thumbnail */
+    const imgList = (project.images && project.images.length)
+      ? project.images
+      : (project.thumbnail ? [project.thumbnail] : []);
+
+    /* Populate swiper */
+    const track   = document.getElementById('modal-swiper-track');
+    const prevBtn = document.getElementById('modal-swiper-prev');
+    const nextBtn = document.getElementById('modal-swiper-next');
+    const counter = document.getElementById('modal-swiper-counter');
+
+    if (track) {
+      if (imgList.length) {
+        track.innerHTML = imgList.map(function(src) {
+          return '<div class="modal-swiper-slide"><img src="' + src + '" alt="' + project.title + '"></div>';
+        }).join('');
+        _swiperTotal = imgList.length;
+        _swiperIdx   = 0;
+        track.style.transform = 'translateX(0)';
+        const multi = imgList.length > 1;
+        if (prevBtn) prevBtn.style.display = multi ? 'flex' : 'none';
+        if (nextBtn) nextBtn.style.display = multi ? 'flex' : 'none';
+        if (counter) { counter.style.display = multi ? 'block' : 'none'; counter.textContent = '1 / ' + imgList.length; }
       } else {
-        thumbEl.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><svg style="width:48px;height:48px;opacity:0.4;color:white;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>';
+        track.innerHTML = '<div class="modal-swiper-slide"><div class="modal-swiper-placeholder">' +
+          '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>' +
+          '<span>No images yet — upload via dashboard</span></div></div>';
+        _swiperTotal = 1;
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+        if (counter) counter.style.display = 'none';
       }
     }
 
@@ -399,6 +441,21 @@
     document.getElementById('project-modal').classList.remove('open');
     document.body.style.overflow = '';
   }
+
+  /* Swiper button listeners */
+  document.getElementById('modal-swiper-prev').addEventListener('click', function(e) {
+    e.stopPropagation(); _swiperGo(_swiperIdx - 1);
+  });
+  document.getElementById('modal-swiper-next').addEventListener('click', function(e) {
+    e.stopPropagation(); _swiperGo(_swiperIdx + 1);
+  });
+
+  /* Keyboard navigation inside modal */
+  document.addEventListener('keydown', function(e) {
+    if (!document.getElementById('project-modal').classList.contains('open')) return;
+    if (e.key === 'ArrowLeft')  _swiperGo(_swiperIdx - 1);
+    if (e.key === 'ArrowRight') _swiperGo(_swiperIdx + 1);
+  });
 
   document.getElementById('project-modal').addEventListener('click', function(e) {
     if (e.target === this) closeProjectModal();

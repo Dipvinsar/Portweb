@@ -667,3 +667,205 @@ footer a { color: var(--teal); }
   .nav-toggle { display: block; }
   .dropdown { position: static; box-shadow: none; border: none; padding-left: 1rem; }
 }
+
+
+/* =========================================================
+   HERO — CV DOWNLOAD BUTTON
+   ========================================================= */
+.hero-cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.75rem 1.75rem;
+  border-radius: 40px;
+  background: var(--teal);
+  color: var(--white);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 2px solid var(--teal);
+  transition: all var(--transition);
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+}
+.hero-cv-btn:hover {
+  background: var(--teal-dark);
+  border-color: var(--teal-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.hero-cv-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+/* =========================================================
+   TESTIMONIAL SLIDER
+   ========================================================= */
+.testi-slider-wrap { position: relative; }
+.testi-slider { overflow: hidden; }
+.testi-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.testi-slide { min-width: 100%; padding: 0 0.25rem; }
+.testi-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 2rem 2.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.testi-card::before {
+  content: '\201C';
+  position: absolute;
+  top: 1rem; left: 1.5rem;
+  font-size: 4rem;
+  color: var(--teal-light);
+  font-family: Georgia, serif;
+  line-height: 1;
+  pointer-events: none;
+}
+.testi-avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: var(--teal-soft);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--teal-dark);
+  font-size: 1.5rem;
+  font-weight: 700;
+  border: 3px solid var(--teal-light);
+}
+.testi-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.testi-body { flex: 1; }
+.testi-quote {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--mid);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  padding-top: 1.5rem;
+}
+.testi-name { font-weight: 600; color: var(--dark); font-size: 0.95rem; }
+.testi-role { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+.testi-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.testi-btn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--mid);
+  transition: all var(--transition);
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+.testi-btn:hover { border-color: var(--teal); color: var(--teal); box-shadow: var(--shadow-md); }
+.testi-btn svg { width: 16px; height: 16px; }
+.testi-dots { display: flex; gap: 0.5rem; align-items: center; }
+.testi-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+.testi-dot.active { background: var(--teal); width: 24px; border-radius: 4px; }
+@media (max-width: 640px) {
+  .testi-card { flex-direction: column; gap: 1rem; padding: 1.5rem; }
+  .testi-avatar { width: 52px; height: 52px; font-size: 1.1rem; }
+}
+
+/* =========================================================
+   PROJECT IMAGE SWIPER (modal)
+   ========================================================= */
+.modal-swiper {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #0f172a;
+  margin-bottom: 1.5rem;
+  height: 260px;
+}
+.modal-swiper-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.4s ease;
+}
+.modal-swiper-slide {
+  min-width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+}
+.modal-swiper-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.modal-swiper-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0.75rem;
+  color: rgba(255,255,255,0.3);
+}
+.modal-swiper-placeholder svg { width: 48px; height: 48px; }
+.modal-swiper-placeholder span { font-size: 0.82rem; }
+.modal-swiper-btn {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.45);
+  border: none;
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  z-index: 10;
+}
+.modal-swiper-btn:hover { background: rgba(0,0,0,0.7); }
+.modal-swiper-btn svg { width: 16px; height: 16px; }
+.modal-swiper-prev { left: 0.75rem; }
+.modal-swiper-next { right: 0.75rem; }
+.modal-swiper-counter {
+  position: absolute;
+  bottom: 0.75rem; right: 0.75rem;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* =========================================================
+   EXPAND PANEL IMAGES (Academic & Experience)
+   ========================================================= */
+.panel-img-row {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding: 0.75rem 0 0.25rem;
+  scroll-snap-type: x mandatory;
+}
+.panel-img-row::-webkit-scrollbar { height: 3px; }
+.panel-img-row::-webkit-scrollbar-track { background: var(--border); }
+.panel-img-row::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 2px; }
+.panel-img-row img {
+  width: 160px; height: 110px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  border: 1px solid var(--border);
+}

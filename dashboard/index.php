@@ -217,6 +217,17 @@ input,textarea,select{font-family:inherit;font-size:.88rem}
 .clear-btn{background:var(--s100);color:var(--s600);border:none;padding:.48rem .875rem;border-radius:20px;font-size:.77rem;font-weight:600;cursor:pointer;transition:all .2s}
 .clear-btn:hover{background:var(--danger-pale);color:var(--danger)}
 
+/* ─── MULTI-IMAGE WIDGET ──────────────────────────────────── */
+.multi-img-widget{margin-top:.75rem}
+.multi-img-widget>label{display:block;font-size:.79rem;font-weight:600;color:var(--s700);margin-bottom:.5rem}
+.multi-img-grid{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem;min-height:0}
+.multi-img-item{position:relative;width:72px;height:72px;border-radius:8px;overflow:hidden;border:1.5px solid var(--s200);background:var(--s100);flex-shrink:0}
+.multi-img-item img{width:100%;height:100%;object-fit:cover}
+.multi-img-del{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;line-height:1;padding:0}
+.multi-img-del:hover{background:var(--danger)}
+.multi-img-add{display:inline-flex;align-items:center;gap:.3rem;background:var(--s100);color:var(--s600);border:1.5px dashed var(--s300);padding:.35rem .75rem;border-radius:20px;font-size:.76rem;font-weight:600;cursor:pointer;transition:all .2s}
+.multi-img-add:hover{background:var(--teal-pale);color:var(--teal-d);border-color:var(--teal)}
+
 /* ─── ARRAY ITEMS ────────────────────────────────────────── */
 .array-item{background:var(--s50);border:1px solid var(--s200);border-radius:12px;padding:1rem 1.25rem;margin-bottom:.875rem}
 .item-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
@@ -810,6 +821,82 @@ function uploadProjectThumb(idx){
   inp.click();
 }
 
+function uploadTestiPhoto(idx){
+  const inp=document.createElement('input');
+  inp.type='file'; inp.accept='image/*';
+  inp.onchange=function(){
+    const file=this.files[0]; if(!file) return;
+    const fd=new FormData();
+    fd.append('action','upload'); fd.append('type','image'); fd.append('file',file);
+    showToast('Mengupload foto…','warning');
+    fetch('',{method:'POST',body:fd}).then(r=>r.json()).then(d=>{
+      if(d.ok){
+        const urlInp=document.getElementById('testi-photo-url-'+idx);
+        if(urlInp) urlInp.value=d.url;
+        const box=document.getElementById('testi-photo-box-'+idx);
+        if(box) box.innerHTML=`<img src="../${d.url}" alt="foto" style="width:100%;height:100%;object-fit:cover;">`;
+        showToast('Foto berhasil diupload','success');
+      } else { showToast('Upload gagal: '+d.msg,'error'); }
+    }).catch(()=>showToast('Koneksi error','error'));
+  };
+  inp.click();
+}
+
+// ── MULTI-IMAGE WIDGET ────────────────────────────────────
+function renderMultiImgWidget(uid, images){
+  const imgs=(images||[]).filter(Boolean);
+  const previews=imgs.map((url,idx)=>{
+    const itemId='mii-'+uid+'-'+idx;
+    return `<div class="multi-img-item" id="${itemId}">
+      <img src="../${url}" alt="img">
+      <input type="hidden" class="multi-img-url" value="${esc(url)}">
+      <button class="multi-img-del" onclick="removeMultiImg('${itemId}')" title="Hapus">×</button>
+    </div>`;
+  }).join('');
+  return `<div class="multi-img-widget">
+    <label>Foto / Gambar Tambahan</label>
+    <div class="multi-img-grid" id="mig-${uid}">${previews}</div>
+    <button type="button" class="multi-img-add" onclick="addMultiImg('${uid}')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:12px;height:12px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      Tambah Foto
+    </button>
+  </div>`;
+}
+
+function addMultiImg(uid){
+  const inp=document.createElement('input');
+  inp.type='file'; inp.accept='image/*';
+  inp.onchange=function(){
+    const file=this.files[0]; if(!file) return;
+    const fd=new FormData();
+    fd.append('action','upload'); fd.append('type','image'); fd.append('file',file);
+    showToast('Mengupload '+file.name+'…','warning');
+    fetch('',{method:'POST',body:fd}).then(r=>r.json()).then(d=>{
+      if(d.ok){
+        const grid=document.getElementById('mig-'+uid);
+        if(!grid) return;
+        const idx=grid.querySelectorAll('.multi-img-item').length;
+        const itemId='mii-'+uid+'-'+idx;
+        const div=document.createElement('div');
+        div.className='multi-img-item'; div.id=itemId;
+        div.innerHTML=`<img src="../${d.url}" alt="img"><input type="hidden" class="multi-img-url" value="${esc(d.url)}"><button class="multi-img-del" onclick="removeMultiImg('${itemId}')" title="Hapus">×</button>`;
+        grid.appendChild(div);
+        showToast('Foto berhasil diupload','success');
+      } else { showToast('Upload gagal: '+d.msg,'error'); }
+    }).catch(()=>showToast('Koneksi error','error'));
+  };
+  inp.click();
+}
+
+function removeMultiImg(itemId){
+  document.getElementById(itemId)?.remove();
+}
+
+function getMultiImgs(gridEl){
+  if(!gridEl) return [];
+  return [...gridEl.querySelectorAll('.multi-img-url')].map(h=>h.value).filter(Boolean);
+}
+
 // ── TAGS WIDGET ───────────────────────────────────────────
 function renderTagsWidget(uid, tags){
   const chips=(tags||[]).map(t=>`<span class="tag-chip">${esc(t)}<button onclick="removeTag('${uid}',this)">×</button></span>`).join('');
@@ -893,6 +980,7 @@ function renderEducation(){
           <div class="field"><label>GPA / Nilai</label><input class="f-gpa" value="${esc(e.gpa)}"/></div>
         </div>
         <div class="field" style="margin-top:1rem"><label>Deskripsi</label><textarea class="f-description" rows="3">${esc(e.description)}</textarea></div>
+        ${renderMultiImgWidget('edu-'+i, e.images||[])}
         <label class="featured-toggle"><input type="checkbox" class="f-featured" ${e.featured !== false ? 'checked' : ''}/> Tampilkan di Landing Page</label>
       </div>
     </div>`).join('');
@@ -920,6 +1008,7 @@ function renderResearch(){
         <div class="field" style="margin-top:1rem"><label>Kontribusi</label><input class="f-contribution" value="${esc(r.contribution)}"/></div>
         <div class="field" style="margin-top:1rem"><label>Deskripsi</label><textarea class="f-description" rows="3">${esc(r.description)}</textarea></div>
         <div class="field" style="margin-top:1rem"><label>Link Paper (opsional)</label><input class="f-paperLink" value="${esc(r.paperLink||'')}"/></div>
+        ${renderMultiImgWidget('res-'+i, r.images||[])}
         <label class="featured-toggle"><input type="checkbox" class="f-featured" ${r.featured !== false ? 'checked' : ''}/> Tampilkan di Landing Page</label>
       </div>
     </div>`).join('');
@@ -940,6 +1029,7 @@ function renderHardSkills(){
         ${profSlider('f-proficiency',s.proficiency)}
         <div class="field" style="margin-top:1rem"><label>Deskripsi</label><textarea class="f-description" rows="3">${esc(s.description)}</textarea></div>
         <div class="field" style="margin-top:1rem"><label>Link Sertifikat (opsional)</label><input class="f-certLink" value="${esc(s.certLink||'')}"/></div>
+        ${renderMultiImgWidget('skill-'+i, s.images||[])}
       </div>
     </div>`).join('');
 }
@@ -983,6 +1073,7 @@ function renderExp(type,listId){
         </div>
         <div class="field" style="margin-top:1rem"><label>Deskripsi</label><textarea class="f-description" rows="4">${esc(e.description)}</textarea></div>
         <div class="field" style="margin-top:1rem"><label>Link (opsional)</label><input class="f-link" value="${esc(e.link||'')}"/></div>
+        ${renderMultiImgWidget('exp-'+type+'-'+i, e.images||[])}
         <label class="featured-toggle"><input type="checkbox" class="f-featured" ${e.featured !== false ? 'checked' : ''}/> Tampilkan di Landing Page</label>
       </div>
     </div>`).join('');
@@ -1021,6 +1112,8 @@ function renderProjects(){
           </div>
           <input type="hidden" id="proj-thumb-${i}" class="f-thumbnail" value="${esc(p.thumbnail||'')}"/>
         </div>
+        ${renderMultiImgWidget('proj-imgs-'+i, p.images||[])}
+        <p style="font-size:.74rem;color:#94A3B8;margin-top:.25rem;">↑ Gambar tambahan di atas ditampilkan di slider modal project (selain thumbnail)</p>
         <div class="field" style="margin-top:1rem"><label>Link Eksternal (opsional)</label><input class="f-externalLink" value="${esc(p.externalLink||'')}"/></div>
         <label class="featured-toggle"><input type="checkbox" class="f-featured" ${p.featured !== false ? 'checked' : ''}/> Tampilkan di Landing Page</label>
       </div>
@@ -1043,6 +1136,21 @@ function renderTestimonials(){
           <div class="field"><label>Jabatan / Posisi</label><input class="f-title" value="${esc(t.title)}"/></div>
         </div>
         <div class="field" style="margin-top:1rem"><label>Kutipan / Testimoni</label><textarea class="f-quote" rows="3">${esc(t.quote)}</textarea></div>
+        <div class="field" style="margin-top:1rem">
+          <label>Foto Testimoni (opsional)</label>
+          <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;padding:.75rem;background:var(--s50);border:1px solid var(--s200);border-radius:8px;">
+            <div id="testi-photo-box-${i}" style="width:52px;height:52px;border-radius:50%;overflow:hidden;border:2px solid var(--s200);background:var(--s100);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#94a3b8;">
+              ${t.photo ? `<img src="../${t.photo}" alt="foto" style="width:100%;height:100%;object-fit:cover;">` : 'foto'}
+            </div>
+            <div style="flex:1;min-width:160px;">
+              <input class="f-photo" id="testi-photo-url-${i}" value="${esc(t.photo||'')}" placeholder="URL foto..." style="width:100%;margin-bottom:.4rem;"/>
+              <button type="button" class="upload-btn" onclick="uploadTestiPhoto(${i})" style="font-size:.74rem;padding:.35rem .75rem;">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:12px;height:12px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                Upload Foto
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>`).join('');
 }
@@ -1181,17 +1289,18 @@ function collectData(){
   D.labels.project.pageSub   = gi('lbl-projectsSubtitle','Showcasing engineering solutions and research');
 
   // Education — read from DOM using classes
-  D.academic.education=[...document.querySelectorAll('#education-list .array-item')].map(el=>({
+  D.academic.education=[...document.querySelectorAll('#education-list .array-item')].map((el,i)=>({
     institution: el.querySelector('.f-institution')?.value?.trim()||'',
     degree:      el.querySelector('.f-degree')?.value?.trim()||'',
     period:      el.querySelector('.f-period')?.value?.trim()||'',
     gpa:         el.querySelector('.f-gpa')?.value?.trim()||'',
     description: el.querySelector('.f-description')?.value?.trim()||'',
+    images:      getMultiImgs(el.querySelector('#mig-edu-'+i)||el),
     featured:    el.querySelector('.f-featured')?.checked !== false ? true : false
   }));
 
   // Research
-  D.academic.research=[...document.querySelectorAll('#research-list .array-item')].map(el=>({
+  D.academic.research=[...document.querySelectorAll('#research-list .array-item')].map((el,i)=>({
     title:        el.querySelector('.f-title')?.value?.trim()||'',
     role:         el.querySelector('.f-role')?.value?.trim()||'',
     institution:  el.querySelector('.f-institution')?.value?.trim()||'',
@@ -1199,6 +1308,7 @@ function collectData(){
     contribution: el.querySelector('.f-contribution')?.value?.trim()||'',
     description:  el.querySelector('.f-description')?.value?.trim()||'',
     paperLink:    el.querySelector('.f-paperLink')?.value?.trim()||null,
+    images:       getMultiImgs(el.querySelector('#mig-res-'+i)||el),
     featured:     el.querySelector('.f-featured')?.checked !== false ? true : false
   }));
 
@@ -1210,7 +1320,7 @@ function collectData(){
     proficiency: parseInt(el.querySelector('.f-proficiency')?.value||80),
     description: el.querySelector('.f-description')?.value?.trim()||'',
     certLink:    el.querySelector('.f-certLink')?.value?.trim()||null,
-    images:      D.skills.hard[i]?.images||[]
+    images:      getMultiImgs(el.querySelector('#mig-skill-'+i)||el)
   }));
 
   // Soft Skills
@@ -1232,7 +1342,7 @@ function collectData(){
       period:       el.querySelector('.f-period')?.value?.trim()||'',
       description:  el.querySelector('.f-description')?.value?.trim()||'',
       link:         el.querySelector('.f-link')?.value?.trim()||null,
-      image:        D.experiences[type][i]?.image||null,
+      images:       getMultiImgs(el.querySelector('#mig-exp-'+type+'-'+i)||el),
       featured:     el.querySelector('.f-featured') ? el.querySelector('.f-featured').checked : true
     }));
   });
@@ -1259,6 +1369,7 @@ function collectData(){
       description:  el.querySelector('.f-description')?.value?.trim()||'',
       tags:         getTags('proj-'+i),
       thumbnail:    el.querySelector('.f-thumbnail')?.value?.trim()||null,
+      images:       getMultiImgs(el.querySelector('#mig-proj-imgs-'+i)||el),
       externalLink: el.querySelector('.f-externalLink')?.value?.trim()||null,
       featured:     el.querySelector('.f-featured') ? el.querySelector('.f-featured').checked : true
     };
@@ -1269,7 +1380,8 @@ function collectData(){
     id:    D.testimonials[i]?.id||'test-'+i,
     name:  el.querySelector('.f-name')?.value?.trim()||'',
     title: el.querySelector('.f-title')?.value?.trim()||'',
-    quote: el.querySelector('.f-quote')?.value?.trim()||''
+    quote: el.querySelector('.f-quote')?.value?.trim()||'',
+    photo: el.querySelector('.f-photo')?.value?.trim()||null
   }));
 
   return D;

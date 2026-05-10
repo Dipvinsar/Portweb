@@ -247,6 +247,85 @@
       if (desc) desc.textContent = L.index.connectDesc;
     }
 
+    /* CV Download Button */
+    var cvBtn = $id('hero-cv-btn');
+    if (cvBtn && p.cvLink) {
+      cvBtn.href = p.cvLink;
+      cvBtn.style.display = 'inline-flex';
+    }
+
+    /* Testimonial Slider */
+    var testiTrack = $id('testi-track');
+    var testiDots  = $id('testi-dots');
+    if (testiTrack && data.testimonials && data.testimonials.length) {
+      var validTestis = data.testimonials.filter(function(t) { return t.name && t.quote; });
+      if (validTestis.length) {
+        /* Build slides */
+        testiTrack.innerHTML = validTestis.map(function(t) {
+          var initials = (t.name || 'A').split(' ').map(function(w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
+          var avatarHtml = t.photo
+            ? '<div class="testi-avatar"><img src="' + t.photo + '" alt="' + t.name + '"></div>'
+            : '<div class="testi-avatar">' + initials + '</div>';
+          return '<div class="testi-slide">' +
+            '<div class="testi-card">' +
+            avatarHtml +
+            '<div class="testi-body">' +
+            '<p class="testi-quote">' + t.quote + '</p>' +
+            '<div class="testi-name">' + t.name + '</div>' +
+            '<div class="testi-role">' + t.title + '</div>' +
+            '</div></div></div>';
+        }).join('');
+
+        /* Build dots */
+        if (testiDots) {
+          testiDots.innerHTML = validTestis.map(function(_, i) {
+            return '<button class="testi-dot' + (i === 0 ? ' active' : '') + '" data-i="' + i + '" aria-label="Slide ' + (i+1) + '"></button>';
+          }).join('');
+        }
+
+        /* Slider logic */
+        var curIdx = 0;
+        function goToTesti(idx) {
+          curIdx = (idx + validTestis.length) % validTestis.length;
+          testiTrack.style.transform = 'translateX(-' + (curIdx * 100) + '%)';
+          if (testiDots) {
+            testiDots.querySelectorAll('.testi-dot').forEach(function(d, i) {
+              d.classList.toggle('active', i === curIdx);
+            });
+          }
+        }
+
+        var prevBtn = $id('testi-prev');
+        var nextBtn = $id('testi-next');
+        if (prevBtn) prevBtn.addEventListener('click', function() { goToTesti(curIdx - 1); });
+        if (nextBtn) nextBtn.addEventListener('click', function() { goToTesti(curIdx + 1); });
+        if (testiDots) {
+          testiDots.querySelectorAll('.testi-dot').forEach(function(dot) {
+            dot.addEventListener('click', function() { goToTesti(parseInt(dot.dataset.i)); });
+          });
+        }
+
+        /* Auto-advance every 6 seconds — only if more than 1 testimonial */
+        if (validTestis.length > 1) {
+          var autoTimer = setInterval(function() { goToTesti(curIdx + 1); }, 6000);
+          /* Pause on hover */
+          var sliderWrap = document.querySelector('.testi-slider-wrap');
+          if (sliderWrap) {
+            sliderWrap.addEventListener('mouseenter', function() { clearInterval(autoTimer); });
+            sliderWrap.addEventListener('mouseleave', function() {
+              autoTimer = setInterval(function() { goToTesti(curIdx + 1); }, 6000);
+            });
+          }
+        }
+
+        /* Hide controls if only 1 testimonial */
+        if (validTestis.length === 1) {
+          var ctrl = $id('testi-controls');
+          if (ctrl) ctrl.style.display = 'none';
+        }
+      }
+    }
+
   }
 
   /* =========================================================
@@ -262,6 +341,9 @@
       eduContainer.innerHTML = data.academic.education.map(function (edu) {
         var gpaHtml = edu.gpa ? '<div class="gpa-badge">' + gpaStarSvg + 'GPA ' + edu.gpa + '</div>' : '';
         var desc = edu.description ? edu.description.replace(/\n\n/g, '<br><br>') : '';
+        var eduImgHtml = (edu.images && edu.images.length)
+          ? '<div class="panel-img-row">' + edu.images.map(function(src) { return '<img src="' + src + '" alt="' + edu.institution + '">'; }).join('') + '</div>'
+          : '';
         return '<div class="animate academic-card">' +
           '<div class="academic-icon">' + makeSvgRaw(edu.icon || 'graduation', '26px') + '</div>' +
           '<div class="academic-card-header"><div>' +
@@ -271,6 +353,7 @@
           gpaHtml +
           '</div><span class="academic-period">' + edu.period + '</span></div>' +
           '<div class="academic-desc">' + desc + '</div>' +
+          eduImgHtml +
           '</div>';
       }).join('');
     }
@@ -280,6 +363,9 @@
     if (resContainer && data.academic && data.academic.research) {
       resContainer.innerHTML = data.academic.research.map(function (res) {
         var desc = res.description ? res.description.replace(/\n\n/g, '<br><br>') : '';
+        var resImgHtml = (res.images && res.images.length)
+          ? '<div class="panel-img-row">' + res.images.map(function(src) { return '<img src="' + src + '" alt="' + res.title + '">'; }).join('') + '</div>'
+          : '';
         var contribHtml = res.contribution ?
           '<div style="margin-bottom:0.75rem;">' +
           '<span style="font-size:0.82rem;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:0.05em;">' + (L.contributionLabel || 'Contribution') + '</span>' +
@@ -298,6 +384,7 @@
           '</div><span class="academic-period">' + res.period + '</span></div>' +
           contribHtml +
           '<div class="academic-desc">' + desc + '</div>' +
+          resImgHtml +
           paperHtml +
           '</div>';
       }).join('');
@@ -365,6 +452,11 @@
     var chevSvg = '<svg class="tl-expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>';
     var toggleFn = (type === 'other') ? 'toggleOtherCard(this)' : 'toggleTlCard(this)';
     var locationHtml = exp.location ? '<div class="tl-location">' + pinSvg + ' ' + exp.location + '</div>' : '';
+    /* Support single image field OR images[] array */
+    var expImgs = (exp.images && exp.images.length) ? exp.images : (exp.image ? [exp.image] : []);
+    var expImgHtml = expImgs.length
+      ? '<div class="panel-img-row">' + expImgs.map(function(src) { return '<img src="' + src + '" alt="' + exp.title + '">'; }).join('') + '</div>'
+      : '';
     return '<div class="timeline-item">' +
       '<div class="timeline-dot"></div>' +
       '<div class="timeline-card" onclick="' + toggleFn + '">' +
@@ -376,7 +468,7 @@
       '<div class="tl-period">' + calSvg + ' ' + exp.period + '</div>' +
       chevSvg +
       '</div></div>' +
-      '<div class="tl-desc-wrap"><div class="tl-desc">' + exp.description + '</div></div>' +
+      '<div class="tl-desc-wrap"><div class="tl-desc">' + exp.description + expImgHtml + '</div></div>' +
       '</div></div>';
   }
 
