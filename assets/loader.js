@@ -87,6 +87,51 @@
   }
 
   /* =========================================================
+     NAV DROPDOWN — populate from JSON (Bug 1 fix)
+  ========================================================= */
+  function renderNav(data) {
+    /* Academic dropdown */
+    var acDropdowns = document.querySelectorAll('.dropdown-academic');
+    if (acDropdowns.length && data.academic) {
+      var acLinks = [];
+      if (data.academic.education && data.academic.education.length) {
+        data.academic.education.forEach(function (edu) {
+          acLinks.push('<a href="academic.html#education">' + edu.institution + '</a>');
+        });
+      }
+      if (data.academic.research && data.academic.research.length) {
+        data.academic.research.forEach(function (res) {
+          acLinks.push('<a href="academic.html#research">' + res.title + '</a>');
+        });
+      }
+      if (acLinks.length) {
+        acDropdowns.forEach(function (dd) { dd.innerHTML = acLinks.join(''); });
+      }
+    }
+
+    /* Skill dropdown — list individual skills with section headers */
+    var skillDropdowns = document.querySelectorAll('.dropdown-skill');
+    if (skillDropdowns.length && data.skills) {
+      var skillLinks = [];
+      if (data.skills.hard && data.skills.hard.length) {
+        skillLinks.push('<span class="dropdown-header">Hard Skills</span>');
+        data.skills.hard.forEach(function (s) {
+          skillLinks.push('<a href="skill.html#hard">' + s.title + '</a>');
+        });
+      }
+      if (data.skills.soft && data.skills.soft.length) {
+        skillLinks.push('<span class="dropdown-header">Soft Skills</span>');
+        data.skills.soft.forEach(function (s) {
+          skillLinks.push('<a href="skill.html#soft">' + s.title + '</a>');
+        });
+      }
+      if (skillLinks.length) {
+        skillDropdowns.forEach(function (dd) { dd.innerHTML = skillLinks.join(''); });
+      }
+    }
+  }
+
+  /* =========================================================
      RE-TRIGGER ANIMATIONS for dynamically added elements
   ========================================================= */
   function reObserve() {
@@ -180,24 +225,6 @@
       }).join('');
     }
 
-    /* Featured projects (first 2) */
-    var featGrid = $id('featured-projects-grid');
-    if (featGrid && data.projects && data.projects.length) {
-      featGrid.innerHTML = data.projects.slice(0, 2).map(function (proj) {
-        return '<div class="summary-card">' +
-          '<div class="tag-row" style="margin-bottom:0.75rem;">' +
-          proj.tags.map(function (t) { return '<span class="tag">' + t + '</span>'; }).join('') +
-          '</div>' +
-          '<h4>' + proj.title + '</h4>' +
-          '<p style="margin-top:0.4rem;">' + proj.headline + '</p>' +
-          '<div style="margin-top:1rem;"><a href="project.html" class="link-teal">View Project ' +
-          '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px;height:14px;">' +
-          '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>' +
-          '</a></div>' +
-          '</div>';
-      }).join('');
-    }
-
     /* Contact links */
     var emailLink = $id('contact-email');
     if (emailLink && p.email) {
@@ -219,6 +246,7 @@
       var desc = document.querySelector('.contact-section > .container .animate p');
       if (desc) desc.textContent = L.index.connectDesc;
     }
+
   }
 
   /* =========================================================
@@ -459,6 +487,121 @@
   }
 
   /* =========================================================
+     CAROUSELS — infinite auto-scroll for landing page
+  ========================================================= */
+
+  /* Build a seamless looping carousel by duplicating cards */
+  function buildCarousel(trackId, cards) {
+    var track = $id(trackId);
+    if (!track || !cards.length) return;
+
+    /* Fewer than 5 cards: static centered row, no scroll needed */
+    if (cards.length < 5) {
+      track.innerHTML = cards.join('');
+      track.style.animation = 'none';
+      track.style.width = 'auto';
+      track.style.flexWrap = 'wrap';
+      track.style.justifyContent = 'center';
+      var wrap = track.parentElement;
+      if (wrap && wrap.classList.contains('carousel-wrap')) {
+        wrap.style.webkitMaskImage = 'none';
+        wrap.style.maskImage = 'none';
+        wrap.style.overflow = 'visible';
+      }
+      return;
+    }
+
+    /* Duplicate for seamless loop */
+    track.innerHTML = cards.join('') + cards.join('');
+    /* Speed: 8s per card, min 20s, max 64s */
+    var dur = Math.min(64, Math.max(20, cards.length * 8));
+    track.style.animationDuration = dur + 's';
+  }
+
+  /* Academic slide card (education or research) */
+  function makeAcSlide(item, type) {
+    var iconKey = type === 'edu' ? 'graduation' : 'flask';
+    var badge   = type === 'edu' ? 'Education' : 'Research';
+    var href    = type === 'edu' ? 'academic.html#education' : 'academic.html#research';
+    var title   = type === 'edu' ? item.institution : item.title;
+    var sub     = type === 'edu'
+      ? (item.degree || '') + (item.gpa ? ' · GPA ' + item.gpa : '')
+      : (item.role || '') + (item.institution ? ' · ' + item.institution : '');
+    return '<a href="' + href + '" class="slide-card">' +
+      '<span class="slide-badge">' + badge + '</span>' +
+      '<div class="slide-icon">' + makeSvgRaw(iconKey, '20px') + '</div>' +
+      '<div class="slide-title">' + title + '</div>' +
+      '<div class="slide-sub">' + sub + '</div>' +
+      (item.period ? '<div class="slide-period">' + item.period + '</div>' : '') +
+      '</a>';
+  }
+
+  /* Experience slide card (professional or organisational) */
+  function makeExpSlide(item, type) {
+    var badge = type === 'professional' ? 'Professional' : 'Organisational';
+    var href  = type === 'professional' ? 'experience.html#professional' : 'experience.html#organisational';
+    return '<a href="' + href + '" class="slide-card">' +
+      '<span class="slide-badge">' + badge + '</span>' +
+      '<div class="slide-title">' + item.title + '</div>' +
+      '<div class="slide-org">' + item.organization + '</div>' +
+      (item.period ? '<div class="slide-period">' + item.period + '</div>' : '') +
+      '</a>';
+  }
+
+  /* Project slide card */
+  function makeProjSlide(proj) {
+    var thumbHtml = proj.thumbnail
+      ? '<img src="' + proj.thumbnail + '" alt="' + proj.title + '">'
+      : '<div class="slide-thumb-placeholder">' +
+        '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>' +
+        '</div>';
+    var tagsHtml = (proj.tags || []).slice(0, 2).map(function (t) {
+      return '<span class="slide-badge">' + t + '</span>';
+    }).join('');
+    return '<a href="project.html" class="slide-proj">' +
+      '<div class="slide-thumb-area">' + thumbHtml + '</div>' +
+      '<div class="slide-body">' +
+      '<div class="slide-badges">' + tagsHtml + '</div>' +
+      '<div class="slide-headline">' + proj.title + '</div>' +
+      '<div class="slide-sub">' + (proj.headline || '') + '</div>' +
+      '</div></a>';
+  }
+
+  /* Render all three landing-page sliders */
+  function renderSliders(data) {
+    /* Academic slider */
+    var acCards = [];
+    if (data.academic) {
+      (data.academic.education || []).filter(function (i) { return i.featured !== false; }).forEach(function (edu) {
+        acCards.push(makeAcSlide(edu, 'edu'));
+      });
+      (data.academic.research || []).filter(function (i) { return i.featured !== false; }).forEach(function (res) {
+        acCards.push(makeAcSlide(res, 'research'));
+      });
+    }
+    buildCarousel('academic-slider-track', acCards);
+
+    /* Experience slider */
+    var expCards = [];
+    if (data.experiences) {
+      (data.experiences.professional || []).filter(function (e) { return e.title && e.organization && e.featured !== false; }).forEach(function (exp) {
+        expCards.push(makeExpSlide(exp, 'professional'));
+      });
+      (data.experiences.organisational || []).filter(function (e) { return e.featured !== false; }).forEach(function (exp) {
+        expCards.push(makeExpSlide(exp, 'organisational'));
+      });
+    }
+    buildCarousel('experience-slider-track', expCards);
+
+    /* Project slider */
+    var projCards = [];
+    (data.projects || []).filter(function (p) { return p.featured !== false; }).forEach(function (proj) {
+      projCards.push(makeProjSlide(proj));
+    });
+    buildCarousel('project-slider-track', projCards);
+  }
+
+  /* =========================================================
      PAGE DETECTION
   ========================================================= */
   function getPage() {
@@ -482,8 +625,9 @@
     })
     .then(function (data) {
       applyLabels(data);
+      renderNav(data);
       var page = getPage();
-      if (page === 'index')      renderIndex(data);
+      if (page === 'index')      { renderIndex(data); renderSliders(data); }
       if (page === 'academic')   renderAcademic(data);
       if (page === 'skill')      renderSkill(data);
       if (page === 'experience') renderExperience(data);

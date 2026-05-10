@@ -1,27 +1,47 @@
 {
     "personal": {
         "name": "Muhammad Fahmi Al",
-        "title": "Mechanical Engineer | Researcher | Problem Solver",
-        "tagline": "Halo Kang",
+        "title": "Mechanical Engineer | Researcher | Problem Solver | Leader",
+        "tagline": "GET TO KNOW ME",
         "about": "I am a final-year Mechanical Engineering student at Universitas Diponegoro, specializing in fluid mechanics, computational fluid dynamics (CFD), and energy conversion systems. With a GPA of 3.64/4.00 and hands-on research experience at the Mechanical Fluid and Thermal Research Lab, I bridge rigorous analytical thinking with real-world engineering execution.\n\nBeyond technical mastery, I have led large-scale national events, managed cross-functional teams of 100+ members, and driven measurable outcomes through structured project management frameworks. As Executive Director of INCEPTION 2025 — the biggest petroleum event at Undip — I secured 90+ competing teams from across Indonesia and grew an audience of 154,000. I do not just solve problems — I architect solutions.",
         "email": "fahmialkahfi010404@gmail.com",
         "phone": "+62-813-1162-6247",
         "linkedin": "https://www.linkedin.com/in/fahmialkahfi/",
         "location": "Semarang, Central Java, Indonesia",
-        "photo": "Resource/Profile Picture.png",
+        "photo": "uploads/image_1778416352_8bf740.png",
         "cvLink": "uploads/pdf_1778363529_7f0bc8.pdf"
     },
     "academic": {
-        "education": [],
+        "education": [
+            {
+                "institution": "Universitas Diponegoro",
+                "degree": "Mechanical Engineering",
+                "period": "2022 - 2026",
+                "gpa": "3.64/4.00",
+                "description": "",
+                "featured": true
+            }
+        ],
         "research": [
             {
                 "title": "Mechanical Fluid and Thermal Research Lab",
-                "role": "Research Assistant",
+                "role": "Researcher",
                 "institution": "Universitas Diponegoro",
                 "period": "2022 – Present",
-                "contribution": "Researcher & Computational Analyst",
+                "contribution": "CFD and DEM Researcher",
                 "description": "Conducting advanced research in fluid mechanics and thermal systems using industry-grade simulation tools. Working on cutting-edge projects involving computational fluid dynamics (CFD) with ANSYS Fluent and Discrete Element Method (DEM) simulations with ESSS Rocky.\n\nResponsibilities include setting up simulation models, running parametric studies, validating computational results against experimental data, and contributing to research reports and documentation. This lab experience directly shapes my ability to apply theoretical engineering principles to complex, real-world problems.",
-                "paperLink": null
+                "paperLink": null,
+                "featured": true
+            },
+            {
+                "title": "Lecturer Asistant",
+                "role": "Prof. Eflita Yohana",
+                "institution": "Department of Mechanical Engineering",
+                "period": "2023 - 2026",
+                "contribution": "",
+                "description": "",
+                "paperLink": null,
+                "featured": true
             }
         ]
     },
@@ -29,27 +49,27 @@
         "hard": [
             {
                 "id": "cad",
-                "title": "Computer Aided Design",
+                "title": "Computer Aided Design ( Certified as SOLIDWORKS CAD Design Associate)",
                 "type": "Hard Skill",
-                "proficiency": 58,
+                "proficiency": 80,
                 "description": "Proficient in 2D and 3D engineering design using AutoCAD and SOLIDWORKS. Certified as SOLIDWORKS CAD Design Associate (CSWA) in 2025. Applied in professional internship work designing heat exchanger components to TEMA and ASME standards.",
-                "certLink": "https://www.linkedin.com/in/fahmialkahfi/",
+                "certLink": "https://cv.virtualtester.com/qr/?b=SLDWRKS&i=C-FV5ZJ7NKXQ",
                 "images": []
             },
             {
                 "id": "cfd",
                 "title": "Computational Fluid Dynamics",
                 "type": "Hard Skill",
-                "proficiency": 82,
+                "proficiency": 95,
                 "description": "Experienced in simulating complex fluid flow and heat transfer phenomena using ANSYS Fluent. Applied in research projects at the MFT Research Lab for thermal analysis, turbulence modeling, and experimental validation of theoretical fluid dynamic models.",
-                "certLink": "https://www.linkedin.com/in/fahmialkahfi/",
+                "certLink": null,
                 "images": []
             },
             {
                 "id": "dem",
                 "title": "Discrete Element Method",
                 "type": "Hard Skill",
-                "proficiency": 78,
+                "proficiency": 90,
                 "description": "Skilled in particle-based simulation using ESSS Rocky DEM software. Applied in research to model granular flow behavior and particle-fluid interactions — enabling deeper understanding of complex multiphase systems in mechanical engineering applications.",
                 "certLink": null,
                 "images": []
@@ -58,7 +78,7 @@
                 "id": "plantSim",
                 "title": "Technomatic Plant Simulation",
                 "type": "Hard Skill",
-                "proficiency": 74,
+                "proficiency": 70,
                 "description": "Capable of modeling and simulating manufacturing and industrial plant systems to analyze throughput, bottlenecks, and process efficiency. Supports data-driven decision making for plant layout optimization and production planning.",
                 "certLink": null,
                 "images": []
@@ -98,17 +118,8 @@
                 "period": "Jan 2025 – Feb 2025",
                 "description": "Designed and optimized shell and tube heat exchangers using AutoCAD and HTRI software. Ensured all engineering designs met TEMA (Tubular Exchanger Manufacturers Association) and ASME (American Society of Mechanical Engineers) international standards — gaining direct exposure to industrial engineering workflows, client-driven requirements, and professional design documentation practices.",
                 "link": null,
-                "image": null
-            },
-            {
-                "id": "new",
-                "title": "",
-                "organization": "",
-                "location": "",
-                "period": "",
-                "description": "",
-                "link": null,
-                "image": null
+                "image": null,
+                "featured": true
             }
         ],
         "organisational": [
@@ -120,7 +131,8 @@
                 "period": "Jan 2025 – Nov 2025",
                 "description": "Managed organizational programs for 100+ staff members, ensuring all initiatives achieved target satisfaction metrics through OKR frameworks and rigorous KPI monitoring — elevating performance standards across the entire organization systematically.",
                 "link": null,
-                "image": null
+                "image": null,
+                "featured": true
             },
             {
                 "id": "inception",
@@ -130,7 +142,8 @@
                 "period": "Sep 2024 – Mar 2025",
                 "description": "Directed the biggest Petroleum Event and Competition at Undip — a collaboration between SPE Undip, SRE Undip, and IATMI SM Undip. Secured 90+ competing teams from 10+ universities across Indonesia, managed four competitions with a total prize pool exceeding IDR 30 million, grew social media following by 1,000+ (+30%) in two months, and achieved 154,000 views with 1,500+ interactions.",
                 "link": null,
-                "image": null
+                "image": null,
+                "featured": true
             },
             {
                 "id": "spe-director",
@@ -140,7 +153,8 @@
                 "period": "Apr 2024 – May 2025",
                 "description": "Planned and executed the flagship annual event for SPE Undip SC. Organized professional development sessions with speakers from Malaysia's and Indonesia's national oil and gas companies — equipping staff with industry-grade project management and human resource management knowledge.",
                 "link": null,
-                "image": null
+                "image": null,
+                "featured": true
             },
             {
                 "id": "spe-pr",
@@ -150,7 +164,8 @@
                 "period": "Feb 2023 – Apr 2024",
                 "description": "Served as Project Manager for the SPE Company Visit to Baker Hughes, conducting a comprehensive short course for 30+ Undip students — building industry awareness and professional networks for fellow engineering students.",
                 "link": null,
-                "image": null
+                "image": null,
+                "featured": true
             }
         ],
         "other": [
@@ -162,7 +177,8 @@
                 "period": "2024",
                 "description": "Led the team as Team Leader in the Geothermal Development Competition at IPFest 2024, securing 2nd Runner Up position among competing engineering teams from across Indonesia.",
                 "link": null,
-                "image": null
+                "image": null,
+                "featured": true
             },
             {
                 "id": "derrick",
@@ -170,9 +186,10 @@
                 "organization": "Derrick 2024",
                 "location": "",
                 "period": "2024",
-                "description": "Led team as Team Leader to reach the Finalist stage in the Geothermal Case Competition at Derrick 2024 — demonstrating technical depth in renewable energy engineering and strategic problem-solving. Led team as Team Leader to reach the Finalist stage in the Geothermal Case Competition at Derrick 2024 — demonstrating technical depth in renewable energy engineering and strategic problem-solving.Led team as Team Leader to reach the Finalist stage in the Geothermal Case Competition at Derrick 2024 — demonstrating technical depth in renewable energy engineering and strategic problem-solving.Led team as Team Leader to reach the Finalist stage in the Geothermal Case Competition at Derrick 2024 — demonstrating technical depth in renewable energy engineering and strategic problem-solving.Led team as Team Leader to reach the Finalist stage in the Geothermal Case Competition at Derrick 2024 — demonstrating technical depth in renewable energy engineering and strategic problem-solving.",
+                "description": "Led team as Team Leader to reach the Finalist stage in the Geothermal Case Competition at Derrick 2024 — demonstrating technical depth in renewable energy engineering and strategic problem-solving.",
                 "link": null,
-                "image": null
+                "image": null,
+                "featured": true
             },
             {
                 "id": "odm",
@@ -182,7 +199,8 @@
                 "period": "2024",
                 "description": "Planned and executed a large-scale orientation event for over 2,000 participants as Event Division Coordinator — showcasing strong logistical coordination and large event management capabilities.",
                 "link": null,
-                "image": null
+                "image": null,
+                "featured": true
             },
             {
                 "id": "mentoring",
@@ -192,7 +210,8 @@
                 "period": "2024",
                 "description": "Participated in the SPE eMentoring program under mentorship of Selami Sehsuvaroglu — gaining international professional perspective and industry insights in the petroleum and energy engineering sector.",
                 "link": null,
-                "image": null
+                "image": null,
+                "featured": true
             }
         ]
     },
@@ -209,7 +228,8 @@
                 "CFD"
             ],
             "thumbnail": null,
-            "externalLink": "https://www.linkedin.com/in/fahmialkahfi/"
+            "externalLink": "https://www.linkedin.com/in/fahmialkahfi/",
+            "featured": true
         },
         {
             "id": "geothermal-ipfest",
@@ -223,7 +243,8 @@
                 "Research"
             ],
             "thumbnail": null,
-            "externalLink": null
+            "externalLink": null,
+            "featured": true
         },
         {
             "id": "geothermal-derrick",
@@ -236,7 +257,8 @@
                 "Competition"
             ],
             "thumbnail": null,
-            "externalLink": null
+            "externalLink": null,
+            "featured": true
         },
         {
             "id": "heat-exchanger",
@@ -247,37 +269,19 @@
             "tags": [
                 "CAD",
                 "Thermal",
-                "Professional",
-                "Kuringkang"
+                "Professional"
             ],
             "thumbnail": null,
-            "externalLink": null
+            "externalLink": null,
+            "featured": true
         }
     ],
     "testimonials": [
         {
-            "id": "t1",
-            "name": "Add Testimonial",
-            "title": "Colleague / Supervisor / Lecturer",
-            "quote": "This section will feature quotes from people who have worked with Fahmi. Add real testimonials from colleagues, supervisors, or lecturers to strengthen your credibility."
-        },
-        {
             "id": "new",
-            "name": "Babang Ijo",
-            "title": "kakang ku",
-            "quote": "sasasas"
-        },
-        {
-            "id": "new",
-            "name": "",
-            "title": "",
-            "quote": ""
-        },
-        {
-            "id": "new",
-            "name": "",
-            "title": "",
-            "quote": ""
+            "name": "Fahmi Syahputra",
+            "title": "Thesis Partner",
+            "quote": "He is one of my go to person"
         }
     ],
     "labels": {
@@ -290,8 +294,8 @@
             "project": "Project"
         },
         "hero": {
-            "tagline": "Halo Kang",
-            "roles": "Mechanical Engineer | Researcher | Problem Solver"
+            "tagline": "GET TO KNOW ME",
+            "roles": "Mechanical Engineer | Researcher | Problem Solver | Leader"
         },
         "index": {
             "aboutTitle": "About Me",

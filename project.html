@@ -141,7 +141,7 @@
           Academic
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </a>
-        <div class="dropdown">
+        <div class="dropdown dropdown-academic">
           <a href="academic.html#education">Diponegoro University</a>
           <a href="academic.html#research">Mechanical Fluid &amp; Thermal Research Lab</a>
         </div>
@@ -151,7 +151,7 @@
           My Skill
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </a>
-        <div class="dropdown">
+        <div class="dropdown dropdown-skill">
           <a href="skill.html#hard">Hard Skill</a>
           <a href="skill.html#soft">Soft Skill</a>
         </div>
@@ -372,6 +372,17 @@
   function openProjectModal(id) {
     const project = (window.portfolioProjects || projects).find(p => p.id === id);
     if (!project) return;
+
+    /* Bug 3 fix — thumbnail di modal */
+    const thumbEl = document.getElementById('modal-thumb');
+    if (thumbEl) {
+      if (project.thumbnail) {
+        thumbEl.innerHTML = '<img src="' + project.thumbnail + '" alt="' + project.title + '" style="width:100%;height:100%;object-fit:cover;">';
+      } else {
+        thumbEl.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"><svg style="width:48px;height:48px;opacity:0.4;color:white;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>';
+      }
+    }
+
     document.getElementById('modal-title').textContent = project.title;
     document.getElementById('modal-headline').textContent = project.headline;
     document.getElementById('modal-year').textContent = project.year;

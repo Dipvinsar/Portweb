@@ -3,12 +3,26 @@
 //  PORTFOLIO DASHBOARD v2 — Muhammad Fahmi Al Kahfi
 //  GANTI PASSWORD sebelum upload ke hosting!
 // ============================================================
-define('DASHBOARD_PASSWORD', 'fahmi2025');
+define('DASHBOARD_PASSWORD', 'Boom#boom1');
 define('DATA_FILE',   __DIR__ . '/../data/portfolio.json');
 define('UPLOAD_DIR',  __DIR__ . '/../uploads/');
 define('SESSION_KEY', 'pf_admin_logged_in');
 
 session_start();
+
+/* ─── Session timeout: auto-logout setelah 60 menit tidak aktif ─── */
+define('SESSION_TIMEOUT', 3600);
+if (!empty($_SESSION[SESSION_KEY])) {
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > SESSION_TIMEOUT) {
+        /* Session expired — hapus dan bersihkan */
+        session_unset();
+        session_destroy();
+    } else {
+        /* Masih aktif — perbarui timestamp */
+        $_SESSION['last_activity'] = time();
+    }
+}
+
 if (!is_dir(UPLOAD_DIR)) @mkdir(UPLOAD_DIR, 0755, true);
 
 /* ─── POST handlers ─────────────────────────────────────── */
@@ -66,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $new = trim($_POST['new_password']??'');
         if (strlen($new)<6) { echo json_encode(['ok'=>false,'msg'=>'Minimal 6 karakter']); exit; }
         $content = preg_replace("/define\('DASHBOARD_PASSWORD',\s*'[^']*'\)/",
-            "define('DASHBOARD_PASSWORD', '".addslashes($new)."')", file_get_contents(__FILE__));
+            "define('DASHBOARD_PASSWORD', 'Boom#boom1')", file_get_contents(__FILE__));
         echo file_put_contents(__FILE__,$content)!==false
             ? json_encode(['ok'=>true]) : json_encode(['ok'=>false,'msg'=>'Tidak bisa update password.']);
         exit;
@@ -216,6 +230,8 @@ input,textarea,select{font-family:inherit;font-size:.88rem}
 .item-body.open{display:block}
 .add-btn{display:flex;align-items:center;gap:.3rem;background:var(--teal);color:var(--white);border:none;padding:.45rem 1rem;border-radius:20px;font-size:.77rem;font-weight:600;cursor:pointer;margin-top:.75rem;transition:background .2s}
 .add-btn:hover{background:var(--teal-d)}
+.featured-toggle{display:inline-flex;align-items:center;gap:.4rem;margin-top:.75rem;font-size:.8rem;color:var(--s500);cursor:pointer;user-select:none}
+.featured-toggle input{accent-color:var(--teal);width:14px;height:14px;cursor:pointer}
 
 /* ─── TAGS ───────────────────────────────────────────────── */
 .tags-wrap{display:flex;flex-wrap:wrap;gap:.4rem;padding:.45rem;border:1.5px solid var(--s200);border-radius:var(--radius-sm);min-height:42px;cursor:text;background:var(--white);transition:border .2s,box-shadow .2s}
@@ -877,6 +893,7 @@ function renderEducation(){
           <div class="field"><label>GPA / Nilai</label><input class="f-gpa" value="${esc(e.gpa)}"/></div>
         </div>
         <div class="field" style="margin-top:1rem"><label>Deskripsi</label><textarea class="f-description" rows="3">${esc(e.description)}</textarea></div>
+        <label class="featured-toggle"><input type="checkbox" class="f-featured" ${e.featured !== false ? 'checked' : ''}/> Tampilkan di Landing Page</label>
       </div>
     </div>`).join('');
 }
@@ -903,6 +920,7 @@ function renderResearch(){
         <div class="field" style="margin-top:1rem"><label>Kontribusi</label><input class="f-contribution" value="${esc(r.contribution)}"/></div>
         <div class="field" style="margin-top:1rem"><label>Deskripsi</label><textarea class="f-description" rows="3">${esc(r.description)}</textarea></div>
         <div class="field" style="margin-top:1rem"><label>Link Paper (opsional)</label><input class="f-paperLink" value="${esc(r.paperLink||'')}"/></div>
+        <label class="featured-toggle"><input type="checkbox" class="f-featured" ${r.featured !== false ? 'checked' : ''}/> Tampilkan di Landing Page</label>
       </div>
     </div>`).join('');
 }
@@ -965,6 +983,7 @@ function renderExp(type,listId){
         </div>
         <div class="field" style="margin-top:1rem"><label>Deskripsi</label><textarea class="f-description" rows="4">${esc(e.description)}</textarea></div>
         <div class="field" style="margin-top:1rem"><label>Link (opsional)</label><input class="f-link" value="${esc(e.link||'')}"/></div>
+        <label class="featured-toggle"><input type="checkbox" class="f-featured" ${e.featured !== false ? 'checked' : ''}/> Tampilkan di Landing Page</label>
       </div>
     </div>`).join('');
 }
@@ -1003,6 +1022,7 @@ function renderProjects(){
           <input type="hidden" id="proj-thumb-${i}" class="f-thumbnail" value="${esc(p.thumbnail||'')}"/>
         </div>
         <div class="field" style="margin-top:1rem"><label>Link Eksternal (opsional)</label><input class="f-externalLink" value="${esc(p.externalLink||'')}"/></div>
+        <label class="featured-toggle"><input type="checkbox" class="f-featured" ${p.featured !== false ? 'checked' : ''}/> Tampilkan di Landing Page</label>
       </div>
     </div>`).join('');
 }
@@ -1056,14 +1076,14 @@ function trashSvg(){
 
 // ── ADD ITEM ──────────────────────────────────────────────
 const newItem = {
-  education: {institution:'',degree:'',period:'',gpa:'',description:''},
-  research:  {title:'',role:'',institution:'',period:'',contribution:'',description:'',paperLink:null},
+  education: {institution:'',degree:'',period:'',gpa:'',description:'',featured:true},
+  research:  {title:'',role:'',institution:'',period:'',contribution:'',description:'',paperLink:null,featured:true},
   hard:      {id:'new',title:'',type:'Hard Skill',proficiency:75,description:'',certLink:null,images:[]},
   soft:      {id:'new',title:'',type:'Soft Skill',description:'',images:[]},
-  professional:   {id:'new',title:'',organization:'',location:'',period:'',description:'',link:null},
-  organisational: {id:'new',title:'',organization:'',location:'',period:'',description:'',link:null},
+  professional:   {id:'new',title:'',organization:'',location:'',period:'',description:'',link:null,featured:true},
+  organisational: {id:'new',title:'',organization:'',location:'',period:'',description:'',link:null,featured:true},
   other:          {id:'new',title:'',organization:'',period:'',description:'',link:null},
-  projects:    {id:'new',title:'',headline:'',year:new Date().getFullYear().toString(),description:'',tags:[],thumbnail:null,externalLink:null},
+  projects:    {id:'new',title:'',headline:'',year:new Date().getFullYear().toString(),description:'',tags:[],thumbnail:null,externalLink:null,featured:true},
   testimonials:{id:'new',name:'',title:'',quote:''}
 };
 
@@ -1166,7 +1186,8 @@ function collectData(){
     degree:      el.querySelector('.f-degree')?.value?.trim()||'',
     period:      el.querySelector('.f-period')?.value?.trim()||'',
     gpa:         el.querySelector('.f-gpa')?.value?.trim()||'',
-    description: el.querySelector('.f-description')?.value?.trim()||''
+    description: el.querySelector('.f-description')?.value?.trim()||'',
+    featured:    el.querySelector('.f-featured')?.checked !== false ? true : false
   }));
 
   // Research
@@ -1177,7 +1198,8 @@ function collectData(){
     period:       el.querySelector('.f-period')?.value?.trim()||'',
     contribution: el.querySelector('.f-contribution')?.value?.trim()||'',
     description:  el.querySelector('.f-description')?.value?.trim()||'',
-    paperLink:    el.querySelector('.f-paperLink')?.value?.trim()||null
+    paperLink:    el.querySelector('.f-paperLink')?.value?.trim()||null,
+    featured:     el.querySelector('.f-featured')?.checked !== false ? true : false
   }));
 
   // Hard Skills
@@ -1210,7 +1232,8 @@ function collectData(){
       period:       el.querySelector('.f-period')?.value?.trim()||'',
       description:  el.querySelector('.f-description')?.value?.trim()||'',
       link:         el.querySelector('.f-link')?.value?.trim()||null,
-      image:        D.experiences[type][i]?.image||null
+      image:        D.experiences[type][i]?.image||null,
+      featured:     el.querySelector('.f-featured') ? el.querySelector('.f-featured').checked : true
     }));
   });
 
@@ -1223,7 +1246,8 @@ function collectData(){
     description:  el.querySelector('.f-description')?.value?.trim()||'',
     tags:         getTags('proj-'+i),
     thumbnail:    el.querySelector('.f-thumbnail')?.value?.trim()||null,
-    externalLink: el.querySelector('.f-externalLink')?.value?.trim()||null
+    externalLink: el.querySelector('.f-externalLink')?.value?.trim()||null,
+    featured:     el.querySelector('.f-featured') ? el.querySelector('.f-featured').checked : true
   }));
 
   // Testimonials
